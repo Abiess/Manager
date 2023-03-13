@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "taysirfood-c793d": {
+      "hosting": {
+        "Manager": [
+          "taysirfood-c793d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "taysirfood-c793d"
+  }
+}
