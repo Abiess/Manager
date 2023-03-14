@@ -1,4 +1,8 @@
 {
+  "projects": {
+    "default": "staffmanager-9ba41",
+    "staging": "staffmanager-9ba41"
+  },
   "targets": {
     "taysirfood-c793d": {
       "hosting": {
@@ -8,7 +12,5 @@
       }
     }
   },
-  "projects": {
-    "default": "taysirfood-c793d"
-  }
+  "etags": {}
 }
