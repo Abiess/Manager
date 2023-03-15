@@ -22,12 +22,23 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { initializeFirestore } from '@firebase/firestore';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './component/login/login.component';
+import { RegisterComponent } from './component/register/register.component';
+import { TaskParentComponent } from './task-parent/task-parent.component';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
-    TaskDialogComponent
+    TaskDialogComponent,
+    LoginComponent,
+    RegisterComponent,
+    TaskParentComponent,
+    ForgotPasswordComponent,
+  
   ],
   imports: [
 
@@ -42,7 +53,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     FormsModule,
     MatInputModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-   AngularFirestoreModule
+   AngularFirestoreModule,
+   AppRoutingModule
     
   ],
   providers: [
