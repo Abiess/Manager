@@ -1,4 +1,4 @@
-<p *ngIf="!isCommentInEditMode" class="comment">{{ comments }}</p>
+<p *ngIf="!isCommentInEditMode" class="comment">{{ comment!.text }}</p>
 <app-comment-form
   *ngIf="isCommentInEditMode"
   [comment]="comment"

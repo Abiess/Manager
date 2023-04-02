@@ -6,10 +6,10 @@ import {
   OnDestroy
 } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { UUID } from "angular2-uuid";
 import { Subscription } from "rxjs";
 import { Comment } from "src/app/model/coment";
 import { CommentService } from "src/app/shared/coment.service";
-
 
 
 @Component({
@@ -27,6 +27,7 @@ export class CommentFormComponent implements OnDestroy {
   @Input() comment: Comment | undefined;
   @Input() comments: Comment[] | undefined;
   @Input() index: number | undefined;
+  @Input() taskId : string | undefined;
 
   constructor(private commentsService: CommentService) {}
 
@@ -34,9 +35,9 @@ export class CommentFormComponent implements OnDestroy {
     this.postCommentSubscription.unsubscribe();
   }
 
-  postComment(form: NgForm, commentId?: number): void {
+  postComment(form: NgForm, commentId?: UUID): void {
     const commentText: string = form.value.commentBox;
-
+  
     if (
       form.valid &&
       commentText !== "" &&
@@ -44,7 +45,8 @@ export class CommentFormComponent implements OnDestroy {
       commentText !== null
     ) {
       this.postCommentSubscription.add(
-        this.commentsService.postComment(commentText, commentId).subscribe({
+        this.commentsService.postComment(commentText, commentId, this.taskId
+          ).subscribe({
           next: (updatedComment) => {
             if (this.index) {
               this.comments![this.index].text = updatedComment?.text;

@@ -1,0 +1,54 @@
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1rem;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .card-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .card-subtitle {
+    color: #666;
+    margin-top: 0.5rem;
+  }
+  
+  .card-link {
+    display: block;
+    margin-top: 1rem;
+    color: #0077c0;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  mat-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  mat-card img {
+    width: 200px;
+    height: 200px;
+    margin-right: 20px;
+  }
+  
+  mat-card-content {
+    flex-grow: 1;
+  }
+  

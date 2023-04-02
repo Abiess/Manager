@@ -1,0 +1,68 @@
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Add a custom scrollbar */
+.app-container {
+  overflow: auto;
+  height: 100vh;
+  width: 100vw;
+
+}
+
+/* Style the header */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+
+
+/* Style the footer */
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background-color: #1f2428;
+  color: #c9d1d9;
+  padding: 20px;
+}
+
+.app-footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-footer-links a {
+  color: #c9d1d9;
+  margin-right: 16px;
+}
+
+.app-footer-links a:hover {
+  text-decoration: underline;
+}
+
+.app-footer-social a {
+  color: #c9d1d9;
+  margin-right: 16px;
+}
+
+.app-footer-social a:hover {
+  color: #f9826c;
+}
+
+.fa-github:before {
+  content: "\f09b";
+}
+
+.fa-twitter:before {
+  content: "\f099";
+}
+
+.fa-discord:before {
+  content: "\f392";
+}

@@ -1,0 +1,52 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button fxHide.gt-sm>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a mat-button routerLink="/" fxLayout.gt-sm>Home</a>
+    <a mat-button routerLink="/projects" fxLayout.gt-sm>Projects</a>
+    <a mat-button routerLink="/issues" fxLayout.gt-sm>Issues</a>
+    <a mat-button routerLink="/group" fxLayout.gt-sm>Groups</a>
+    <span class="fill"></span>
+  
+   
+    <mat-form-field appearance="fill">
+      <input #searchInput style="padding-left: 10px;" type="text" matInput placeholder="Search">
+
+      <mat-select matPrefix [(ngModel)]="selectedoption">
+        <mat-option value="Todo">Todo</mat-option>
+        <mat-option value="inProgress">inProgress</mat-option>
+        <mat-option value="Done">Done</mat-option>
+      </mat-select>
+      <mat-icon (click)="search(searchInput.value)" matSuffix>search</mat-icon>
+    </mat-form-field>
+    
+    
+    <!-- <mat-checkbox>In Stock Only</mat-checkbox> -->
+
+    <button mat-icon-button matTooltip="Help" fxHide.gt-sm>
+      <mat-icon>help_outline</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Notifications" [matBadge]="5" matBadgeColor="warn" fxHide.gt-sm>
+      <mat-icon>notifications_none</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Profile" [matMenuTriggerFor]="menu" fxLayoutAlign="end center">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="profil">Profile</button>
+      <button mat-menu-item routerLink="setting">Settings</button>
+      <button mat-menu-item routerLink="/login">Sign out</button>
+    </mat-menu>
+    
+    
+    
+        <!-- <mat-select (selectionChange)="switchLanguage($event.value)">
+          <mat-option value="en">en</mat-option>
+          <mat-option value="fr">fr</mat-option>
+        </mat-select> -->
+       
+      
+        
+      
+  </mat-toolbar>
+  

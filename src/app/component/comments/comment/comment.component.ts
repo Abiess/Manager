@@ -12,6 +12,7 @@ export class CommentComponent {
   @Input() comment: Comment | undefined;
   @Input() index: number | undefined;
   @Input() comments: Comment[] | undefined;
+  
 
   editComment(): void {
     this.isCommentInEditMode = true;
