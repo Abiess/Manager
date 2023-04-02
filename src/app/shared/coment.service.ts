@@ -1,35 +1,75 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
+import { collection, query, where, getDocs, onSnapshot, getFirestore } from "firebase/firestore";
+import { AngularFirestore, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { Comment} from '../model/coment';
+import { UUID } from 'angular2-uuid';
+import { uuidv4 } from '@firebase/util';
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
+  //comments = this.store.collection('comment').valueChanges({ idField: 'id' }) as unknown as Observable<Comment[]>;
+  
+  constructor(private store: AngularFirestore) {
+     
+  }
   comments: Comment[] = [
     {
       id: 1,
-      text: "This is the first comment"
+      text: "This is the first comment",
+      TaskId : "",
     },
     {
       id: 2,
-      text: "This is the second comment"
+      text: "This is the second comment", 
+      TaskId : ""
+
     }
   ];
+  //comment = this.store.collection<Comment>('comment').valueChanges();
+  test = this.store.collection('comment').valueChanges() as Observable<Comment[]>;
+  
 
-  getAllComments(): Observable<Comment[]> {
-    return of(this.comments);
+  getAllComments(): Observable<Comment[]>
+  {
+   return this.test;
   }
-
-  postComment(commentText: string, commentId?: number): Observable<Comment | undefined> {
+  getTaskscomment(taskId : string) : Observable<Comment[]> 
+  {
+    const collectionRef = collection(getFirestore(), "comment");
+    const q = query(collectionRef, where("TaskId","==",taskId));
+   
+    let comments : Comment[] = [];
+    onSnapshot(q, (snapshot) => 
+    {
+      snapshot.docs.forEach(element => {
+        comments.push(element.data() as Comment)
+      });
+    });
+    
+    return of(comments);
+}
+  postComment(commentText: string, commentId?: UUID, _taskId? : string): 
+  Observable<Comment | undefined> {
+    console.log("commet id is " + commentId+ "and uuid is  " + uuidv4() );
     const isNewComment: boolean = commentId === null || commentId === undefined;
     const newComment: Comment = {
-      id: this.comments.length + 1,
-      text: commentText
+      
+      id: uuidv4(),
+      text: commentText, 
+      TaskId: _taskId
     };
-
+    
     if (isNewComment) {
+      
       this.comments.push(newComment);
+ 
+       this.store.collection('comment').add(newComment)
       return of(newComment);
     } else {
       this.comments = this.comments.map(comment => comment.id === commentId ? 
@@ -40,6 +80,7 @@ export class CommentService {
         : comment
       );
       const updatedComment = this.comments.find(comment => comment.id === commentId);
+      
       return of(updatedComment);
     }
   }

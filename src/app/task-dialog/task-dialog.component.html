@@ -1,30 +1,32 @@
-<mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput cdkFocusInitial [(ngModel)]="data.task.title" />
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput [(ngModel)]="data.task.description"></textarea>
-  </mat-form-field>
-  <mat-form-field>
 
-    <mat-label>Deadline</mat-label>
-    <textarea matInput [(ngModel)]="data.task.deadline"></textarea>
-  </mat-form-field>
-  
-  <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="{ task: data.task }">OK</button>
-    <button mat-button (click)="cancel()">Cancel</button>
-    <button
-    *ngIf="data.enableDelete"
-    mat-fab
-    color="primary"
-    aria-label="Delete"
-    [mat-dialog-close]="{ task: data.task, delete: true }">
-    <mat-icon>delete</mat-icon>
-  </button>
-  </div>
+<mat-card>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input matInput cdkFocusInitial [(ngModel)]="data.task.title" placeholder="Titel" name="Titel">
+      </mat-form-field>
+    
+      <mat-form-field>
+        <textarea rows="4" matInput [(ngModel)]="data.task.description" placeholder="Description"  name="Description"></textarea>
+      </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput [(ngModel)]="data.task.deadline" placeholder="Deadline" name="Deadline">
+      </mat-form-field>
 
-
+      <app-comments [taskId]="data.task.id"></app-comments>
  
+      <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="{ task: data.task }">OK</button>
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button *ngIf="data.enableDelete" mat-fab color="primary"aria-label="Delete"
+        [mat-dialog-close]="{ task: data.task, delete: true }">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+      </div>
+    </form>
+
+  </mat-card-content>
+</mat-card>
+
+  

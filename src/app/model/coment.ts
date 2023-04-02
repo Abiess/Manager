@@ -1,4 +1,7 @@
+import { UUID } from "angular2-uuid";
+
 export interface Comment {
-  id: number;
+  id: UUID;
   text: string | undefined;
+  TaskId : string | undefined ;
 }

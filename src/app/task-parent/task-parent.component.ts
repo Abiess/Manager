@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
 import { Observable } from 'rxjs';
 import { Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
+import { TaskService } from '../shared/task.service';
 
 
 @Component({
@@ -16,23 +16,25 @@ import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialo
 
 export class TaskParentComponent {
 
-  todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-  inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-  done = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-
-  constructor(private dialog: MatDialog, private store: AngularFirestore) {
-    this.todo.subscribe((users)=> {
+  todo = this.taskService.todo;
+  inProgress = this.taskService.inProgress;
+  done = this.taskService.done;
+ 
+  
+  constructor(private dialog: MatDialog, private taskService : TaskService) {
+    this.taskService.todo.subscribe((users)=> {
         console.log(users);
     });
-    this.inProgress.subscribe((users)=> {
+    this.taskService.todo.subscribe((users)=> {
       console.log(users);
   });
     
   }
+ 
 
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '270px',
+      width: '470px',
       data: {
         task: {},
       },
@@ -43,13 +45,14 @@ export class TaskParentComponent {
         if (!result) {
           return;
         }
-        this.store.collection('todo').add(result.task);
+        this.taskService.store1.collection('todo').add(result.task);
+        console.log("task is " + result.task)
       });
   }
 
   editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '270px',
+      width: '500px',
       data: {
         task,
         enableDelete: true,
@@ -60,9 +63,9 @@ export class TaskParentComponent {
         return;
       }
       if (result.delete) {
-        this.store.collection(list).doc(task.id).delete();
+        this.taskService.store1.collection(list).doc(task.id).delete();
       } else {
-        this.store.collection(list).doc(task.id).update(task);
+        this.taskService.store1.collection(list).doc(task.id).update(task);
       }
     });
   }
@@ -75,10 +78,10 @@ export class TaskParentComponent {
       return;
     }
     const item = event.previousContainer.data[event.previousIndex];
-    this.store.firestore.runTransaction(() => {
+    this.taskService.store1.firestore.runTransaction(() => {
       const promise = Promise.all([
-        this.store.collection(event.previousContainer.id).doc(item.id).delete(),
-        this.store.collection(event.container.id).add(item),
+        this.taskService.store1.collection(event.previousContainer.id).doc(item.id).delete(),
+        this.taskService.store1.collection(event.container.id).add(item),
       ]);
       return promise;
     });
@@ -89,4 +92,5 @@ export class TaskParentComponent {
       event.currentIndex
     );
   }
+
 }
