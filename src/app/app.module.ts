@@ -52,7 +52,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HomeComponent } from './component/home/home.component';
 import { GroupComponent } from './component/group/group.component';
 import { GroupDialogComponent } from './component/group-dialog/group-dialog.component';
-import { MatTableModule } from '@angular/material/table'; 
+import { MatTableModule } from '@angular/material/table';
+import { ProjectComponent } from './component/project/project.component';
+import { ProjectDialogComponent } from './component/project-dialog/project-dialog.component'; 
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,6 +83,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     GroupComponent,
     GroupDialogComponent,
+    ProjectComponent,
+    ProjectDialogComponent,
     
 
   

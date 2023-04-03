@@ -2,6 +2,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Group } from 'src/app/model/Group';
 
 @Component({
   selector: 'app-group-dialog',
@@ -12,17 +13,19 @@ export class GroupDialogComponent {
 
 constructor(
   public dialogRef: MatDialogRef<GroupDialogComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: DialogData,
-
-)
- {}
+    @Inject(MAT_DIALOG_DATA) public data: TaskDialogData) {}
 
 onNoClick(): void {
   this.dialogRef.close();
 }
+
 }
-export class DialogData {
-  animal: string | undefined;
-  name: string | undefined;
+export interface TaskDialogData {
+  group: Partial<Group>;
+  enableDelete: boolean;
+}
+export interface GroupDialogResult {
+  group: Group;
+  delete?: boolean;
 }
 

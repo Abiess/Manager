@@ -1,17 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GroupDialogComponent, GroupDialogResult } from '../group-dialog/group-dialog.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Group } from '../../model/Group';
+import { Project } from 'src/app/model/project';
 import { TaskService } from 'src/app/shared/task.service';
-import { DataSource } from '@angular/cdk/collections';
+import { ProjectDialogComponent, ProjectDialogResult } from '../project-dialog/project-dialog.component';
 
 @Component({
-  selector: 'app-group',
-  templateUrl: './group.component.html',
-  styleUrls: ['./group.component.css'],
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -22,35 +20,35 @@ import { DataSource } from '@angular/cdk/collections';
 })
 
 
-export class GroupComponent implements OnInit {
+export class ProjectComponent implements OnInit {
   columnsToDisplay = [ 'name', 'description'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement: Group | null | undefined;
+  expandedElement: Project | null | undefined;
   displayedColumns: string[] = [ 'name', 'description', 'createdAm'];
-  dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>();
+  dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
   subDisplayedColumns: string[] = [ 'jj', 'ju', 'jujj'];
 
   constructor(private dialog : MatDialog, private taskService : TaskService) {  }
   ngOnInit() {
-    this.taskService.group.subscribe(groups => {
-    this.dataSource = new MatTableDataSource(groups);
+    this.taskService.project.subscribe(projects => {
+    this.dataSource = new MatTableDataSource(projects);
     });
   }
 openDialog(): void {  
-  const dialogRef = this.dialog.open(GroupDialogComponent, {
+  const dialogRef = this.dialog.open(ProjectDialogComponent, {
     width: '500px',
     data: {
-      group: {},
+      project: {},
     },
   });
   dialogRef
     .afterClosed()
-    .subscribe((result: GroupDialogResult) => {
+    .subscribe((result: ProjectDialogResult) => {
       if (!result) {
         return;
       }
-      this.taskService.store1.collection('group').add(result.group);
-      console.log("group is " + result.group)
+      this.taskService.store1.collection('project').add(result.project);
+      console.log("project is " + result.project)
     });
 }
   applyFilter(event: Event) {
@@ -58,13 +56,5 @@ openDialog(): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-   
-    
-
-  
-
   }
-  
-
-  
   

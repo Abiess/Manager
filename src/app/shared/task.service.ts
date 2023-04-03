@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
+import { Group } from '../model/Group';
 import { Task } from '../task/task';
 
 @Injectable({
@@ -11,6 +12,8 @@ export class TaskService {
   todo: Observable<Task[]>;
   inProgress: Observable<Task[]>;
   done: Observable<Task[]>;
+  group : Observable<Group[]>
+  project : Observable<Group[]>
   store1 : AngularFirestore;
 
   constructor(private store: AngularFirestore) {
@@ -18,8 +21,9 @@ export class TaskService {
     this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
     this.inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' }) as Observable<Task[]>;
     this.done = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-    this.todo.subscribe((todo) => console.log("hier im const"
-    + todo));
+    this.group = this.store.collection('group').valueChanges({ idField: 'id' }) as Observable<Group[]>;
+    this.project = this.store.collection('project').valueChanges({ idField: 'id' }) as Observable<Group[]>;
+
   }
 
   search(searchTerm: string){

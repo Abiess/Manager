@@ -5,6 +5,7 @@ import { GroupComponent } from './component/group/group.component';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { ProfilComponent } from './component/profil/profil.component';
+import { ProjectComponent } from './component/project/project.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SettingComponent } from './component/setting/setting.component';
 import { TaskParentComponent } from './task-parent/task-parent.component';
@@ -18,7 +19,8 @@ const routes: Routes = [
 {path: 'profil', component: ProfilComponent},
 {path: 'setting', component: SettingComponent},
 {path: '', component: HomeComponent},
-{path:'group', component: GroupComponent}
+{path:'groups', component: GroupComponent},
+{path:'projects', component: ProjectComponent}
 ];
 
 @NgModule({
