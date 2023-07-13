@@ -1,23 +1,23 @@
 <mat-card>
-    <mat-card-content>
-      <form>
-        <mat-form-field>
-          <input matInput cdkFocusInitial [(ngModel)]="data.project.name" placeholder="Titel" name="Titel">
-        </mat-form-field>
-      
-        <mat-form-field>
-          <textarea rows="4" matInput [(ngModel)]="data.project.description" placeholder="Description"  name="Description"></textarea>
-        </mat-form-field>
-      
-        <div mat-dialog-actions>
-          <button mat-button [mat-dialog-close]="{ project: data.project }">OK</button>
-          <button mat-button (click)="onNoClick()">Cancel</button>
-          <button *ngIf="data.enableDelete" mat-fab color="primary"aria-label="Delete"
-          [mat-dialog-close]="{ group: data.project, delete: true }">
-          <mat-icon color="warn">delete</mat-icon>
-        </button>
-        </div>
-      </form>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input matInput cdkFocusInitial [(ngModel)]="data.project.name" placeholder="Name" name="Titel">
+      </mat-form-field>
   
-    </mat-card-content>
-  </mat-card>
+      <mat-form-field>
+        <textarea rows="4" matInput [(ngModel)]="data.project.description" placeholder="Description"  name="Description"></textarea>
+      </mat-form-field>
+    
+      <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="{ project: data.project }">OK</button>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button *ngIf="data.enableDelete" mat-fab color="primary"aria-label="Delete"
+        [mat-dialog-close]="{ project: data.project }">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+      </div>
+    </form>
+
+  </mat-card-content>
+</mat-card>

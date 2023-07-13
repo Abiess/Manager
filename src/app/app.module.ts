@@ -39,7 +39,6 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { ProfilComponent } from './component/profil/profil.component';
-import { FooterComponent } from './component/footer/footer.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -77,7 +76,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommentFormComponent,
     NavbarComponent,
     ProfilComponent,
-    FooterComponent,
+    
     SidebarComponent,
     SettingComponent,
     HomeComponent,

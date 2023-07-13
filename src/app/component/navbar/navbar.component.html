@@ -4,18 +4,21 @@
     </button>
     <a mat-button routerLink="/" fxLayout.gt-sm>Home</a>
     <a mat-button routerLink="/projects" fxLayout.gt-sm>Projects</a>
-    <a mat-button routerLink="/issues" fxLayout.gt-sm>Issues</a>
+    <a mat-button routerLink="/task-parent" fxLayout.gt-sm>Tasks</a>
     <a mat-button routerLink="/groups" fxLayout.gt-sm>Groups</a>
     <span class="fill"></span>
   
    
     <mat-form-field appearance="fill">
-      <input #searchInput style="padding-left: 10px;" type="text" matInput placeholder="Search">
+      <input #searchInput style="padding-left: 15px;" type="text" 
+      matInput placeholder="Search">
+  
 
       <mat-select matPrefix [(ngModel)]="selectedoption">
         <mat-option value="Todo">Todo</mat-option>
         <mat-option value="inProgress">inProgress</mat-option>
         <mat-option value="Done">Done</mat-option>
+        
       </mat-select>
       <mat-icon (click)="search(searchInput.value)" matSuffix>search</mat-icon>
     </mat-form-field>

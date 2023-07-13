@@ -42,8 +42,8 @@
   .divider {
     margin-top: 20px;
     margin-bottom: 20px;
-    height: 1px;
-    background-color: #e0e0e0;
+    height: 5px;
+    background-color: purple;
   }
   
   /* Style the dark mode section */
@@ -87,6 +87,16 @@
   }
   
   .settings-container {
-    max-height: 400px; /* set the maximum height of the container */
+    max-height: auto; /* set the maximum height of the container */
     overflow: auto; /* add a scrollbar when content overflows */
+  }
+  .form-fields {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .username-field,
+  .email-field {
+    display: inline-block;
+    width: 45%;
   }

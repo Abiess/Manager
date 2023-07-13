@@ -8,7 +8,7 @@ import { TranslationService } from 'src/app/shared/translation.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-selectedoption: any;
+  selectedoption: string = 'Todo';
 
   switchLanguage(language: string) {
     this.translate.switchLanguage(language);
