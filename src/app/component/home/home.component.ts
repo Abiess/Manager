@@ -18,7 +18,7 @@ export class HomeComponent {
     {
       imageUrl: 'https://via.placeholder.com/300',
       title: 'Groups',
-      subtext: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      subtext: 'Sed do eiusmod tempor dd ut labore et dolore magna aliqua.',
       link: 'https://www.google.com'
     },
     {
