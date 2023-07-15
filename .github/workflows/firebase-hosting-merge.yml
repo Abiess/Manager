@@ -20,6 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+
+      - name: Install firebase
+        run: npm install @angular/fire@latest
+
+
       - name: Build
         run: ng build
 
