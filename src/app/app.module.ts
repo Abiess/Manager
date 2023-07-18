@@ -53,7 +53,9 @@ import { GroupComponent } from './component/group/group.component';
 import { GroupDialogComponent } from './component/group-dialog/group-dialog.component';
 import { MatTableModule } from '@angular/material/table';
 import { ProjectComponent } from './component/project/project.component';
-import { ProjectDialogComponent } from './component/project-dialog/project-dialog.component'; 
+import { ProjectDialogComponent } from './component/project-dialog/project-dialog.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -84,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GroupDialogComponent,
     ProjectComponent,
     ProjectDialogComponent,
+    SpinnerComponent,
     
 
   
@@ -121,7 +124,8 @@ export function HttpLoaderFactory(http: HttpClient) {
    MatCheckboxModule,
    OverlayModule,
    ScrollingModule,
-   MatTableModule
+   MatTableModule,
+   MatProgressSpinnerModule,
    
 
 

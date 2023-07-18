@@ -21,6 +21,7 @@ import { ProjectDialogComponent, ProjectDialogResult } from '../project-dialog/p
 
 
 export class ProjectComponent implements OnInit {
+  isLoading = true;
   columnsToDisplay = [ 'name', 'description'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Project | null | undefined;
@@ -30,8 +31,10 @@ export class ProjectComponent implements OnInit {
 
   constructor(private dialog : MatDialog, private taskService : TaskService) {  }
   ngOnInit() {
+    
     this.taskService.project.subscribe(projects => {
     this.dataSource = new MatTableDataSource(projects);
+    this.isLoading = false;
     });
   }
 openDialog(): void {  

@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 import { TaskService } from '../shared/task.service';
+import { AuthService } from '../shared/auth.service';
+import { getMatInputUnsupportedTypeError } from '@angular/material/input';
 
 
 @Component({
@@ -14,14 +16,15 @@ import { TaskService } from '../shared/task.service';
   styleUrls: ['./task-parent.component.css']
 })
 
-export class TaskParentComponent {
+export class TaskParentComponent implements OnInit{
+  isLoading = true;
 
   todo = this.taskService.todo;
   inProgress = this.taskService.inProgress;
   done = this.taskService.done;
- 
+
   
-  constructor(private dialog: MatDialog, private taskService : TaskService) {
+  constructor(private dialog: MatDialog, private taskService : TaskService, private userService : AuthService) {
     this.taskService.todo.subscribe((users)=> {
         console.log(users);
     });
@@ -30,8 +33,18 @@ export class TaskParentComponent {
   });
     
   }
- 
-
+  ngOnInit(): void {
+      // Simulate data loading
+   this.todo.subscribe({
+    next: () => {
+      this.isLoading = false; // Set loading flag to false when data is loaded
+    },
+    error: () => {
+      this.isLoading = false; // Set loading flag to false in case of an error
+    }
+  });
+  }
+  
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '470px',
@@ -39,14 +52,19 @@ export class TaskParentComponent {
         task: {},
       },
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((result: TaskDialogResult) => {
+    dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
         if (!result) {
           return;
         }
-        this.taskService.store1.collection('todo').add(result.task);
-        console.log("task is " + result.task)
+        this.userService.getLoggedInUser().then(uid => {
+           result.task.creator = uid!;
+           this.taskService.store1.collection('todo').add(result.task);
+        })
+        .catch(error => {
+          console.log('Error retrieving logged-in user:', error);
+        });
+        
+        console.log("task is " + JSON.stringify(result.task)  )
       });
   }
 

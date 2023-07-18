@@ -2,7 +2,11 @@
   <div class="content-wrapper">
     <button (click)="newTask()" mat-button>
       <mat-icon>add</mat-icon> {{'Add Task' | translate}}</button>
-  
+,
+  <div *ngIf="isLoading ; else display">
+    <app-spinner></app-spinner>
+  </div>
+  <ng-template #display>
     <div class="container-wrapper">
       <div class="container">
         <h2>Tasks</h2>
@@ -47,4 +51,6 @@
         </mat-card>
       </div>
     </div>
-  </div>
+
+  </ng-template>
+    

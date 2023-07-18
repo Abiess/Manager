@@ -13,8 +13,10 @@
          Add project    </button>
   <span class="fill"></span>
   </div>
-  
-  <table mat-table
+  <div *ngIf="isLoading" ; else display>
+    <app-spinner></app-spinner>
+  </div>  <div #display>
+    <table mat-table
          [dataSource]="dataSource" multiTemplateDataRows
          class="mat-elevation-z8">
     <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
@@ -65,4 +67,6 @@
       <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
     </tr>
   </table>
+  </div>
+  
   

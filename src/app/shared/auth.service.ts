@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { getAuth, GoogleAuthProvider, User } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { GoogleAuthProvider } from 'firebase/auth';
+import { onAuthStateChanged } from "firebase/auth";
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,14 @@ export class AuthService {
    login(email : string, password : string) {
     this.fireauth.signInWithEmailAndPassword(email,password).then( res => {
         localStorage.setItem('token','true');
-        alert('ich bin beim login');
+       
         this.router.navigate(['/task-parent']);
 
-        if(res.user?.emailVerified == true) {
-          this.router.navigate(['/task-parent']);
-        } else {
-          this.router.navigate(['/varify-email']);
-        }
+        // if(res.user?.emailVerified == true) {
+        //   this.router.navigate(['/task-parent']);
+        // } else {
+        //   this.router.navigate(['/varify-email']);
+        // }
 
     }, err => {
         alert(err.message);
@@ -80,5 +82,18 @@ export class AuthService {
       alert(err.message);
     })
   }
-
+  getLoggedInUser(): Promise<string | null> {
+    return new Promise<string | null>((resolve, reject) => {
+      this.fireauth.onAuthStateChanged((user) => {
+        if (user) {
+          resolve(user.uid);
+        } else {
+          resolve(null);
+        }
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+  
 }
