@@ -38,7 +38,14 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="profil">Profile</button>
       <button mat-menu-item routerLink="setting">Settings</button>
-      <button mat-menu-item routerLink="/login">Sign out</button>
+      
+   <!-- Display "Sign out" button if isLoggedIn is true, else display "Sign in" button -->
+<button mat-menu-item routerLink="/home" *ngIf="!isLoggedIn;
+ else signInButton" (click)="signOut()">Sign out</button>
+<ng-template #signInButton>
+  <button mat-menu-item routerLink="/login">Sign in</button>
+</ng-template>
+
     </mat-menu>
     
     

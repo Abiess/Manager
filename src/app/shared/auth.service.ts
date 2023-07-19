@@ -1,16 +1,28 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { getAuth, GoogleAuthProvider, User } from '@angular/fire/auth';
+import { GoogleAuthProvider, UserInfo } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { onAuthStateChanged } from "firebase/auth";
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  isLoggedIn: boolean = false;
 
-  constructor(private fireauth: AngularFireAuth, private router : Router) { }
+  constructor(private fireauth: AngularFireAuth, private router : Router) {
+    this.initializeAuthStateListener();
+   }
+
+   private initializeAuthStateListener(): void {
+    this.fireauth.authState.subscribe((user : any ) => {
+      this.isLoggedIn = !!user;
+      console.log("the user logged in is " + JSON.stringify(!!user));
+    });
+  }
+
    // login method
    login(email : string, password : string) {
     this.fireauth.signInWithEmailAndPassword(email,password).then( res => {
@@ -47,6 +59,7 @@ export class AuthService {
     this.fireauth.signOut().then( () => {
       localStorage.removeItem('token');
       this.router.navigate(['/login']);
+      console.log("bin im logout");
     }, err => {
       alert(err.message);
     })
@@ -82,11 +95,12 @@ export class AuthService {
       alert(err.message);
     })
   }
-  getLoggedInUser(): Promise<string | null> {
-    return new Promise<string | null>((resolve, reject) => {
+  getLoggedInUser(): Promise<UserInfo | null> {
+    return new Promise<UserInfo | null>((resolve, reject) => {
       this.fireauth.onAuthStateChanged((user) => {
         if (user) {
-          resolve(user.uid);
+          resolve(user);
+          console.log("bin im Service " + JSON.stringify(user))
         } else {
           resolve(null);
         }

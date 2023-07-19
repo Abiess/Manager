@@ -53,11 +53,10 @@ export class TaskParentComponent implements OnInit{
       },
     });
     dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
-        if (!result) {
-          return;
-        }
-        this.userService.getLoggedInUser().then(uid => {
-           result.task.creator = uid!;
+        if (!result) {return;}
+        this.userService.getLoggedInUser().then(userInfo => {
+           result.task.creator = userInfo?.uid;
+           result.task.createdAm = new Date();
            this.taskService.store1.collection('todo').add(result.task);
         })
         .catch(error => {

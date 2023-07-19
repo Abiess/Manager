@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-      <mat-card-title>John Doe</mat-card-title>
+      <mat-card-title>{{loggedInUser?.uid}}</mat-card-title>
       <mat-card-subtitle>Web Developer</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -14,7 +14,7 @@
             </mat-list-item>
             <mat-list-item>
               <div mat-list-avatar></div>
-              <div mat-line>Website</div>
+              <div mat-line>{{loggedInUser?.email}}</div>
               <div mat-line><a href="https://johndoe.com">johndoe.com</a></div>
             </mat-list-item>
           </mat-list>
