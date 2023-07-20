@@ -1,3 +1,4 @@
+import { useAnimation } from '@angular/animations';
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { TaskService } from 'src/app/shared/task.service';
@@ -19,9 +20,10 @@ export class NavbarComponent {
  
   constructor(private translate : TranslationService, private taskService : TaskService, 
     private authService: AuthService) {
-       this.isLoggedIn  = authService.isLoggedIn;
-       console.log("ich bin im navbar ts " + this.isLoggedIn);
-  
+      this.authService.getLoggedInUser().then(userInfo=>{
+        this.isLoggedIn = !!userInfo
+      })
+      
   }
   search(searchTerm : string) {
     this.taskService.search(searchTerm);
