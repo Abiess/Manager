@@ -1,5 +1,6 @@
 import { useAnimation } from '@angular/animations';
 import { Component } from '@angular/core';
+import { User, UserInfo } from '@angular/fire/auth';
 import { AuthService } from 'src/app/shared/auth.service';
 import { TaskService } from 'src/app/shared/task.service';
 import { TranslationService } from 'src/app/shared/translation.service';
@@ -22,8 +23,7 @@ export class NavbarComponent {
     private authService: AuthService) {
       this.authService.getLoggedInUser().then(userInfo=>{
         this.isLoggedIn = !!userInfo
-      })
-      
+   })
   }
   search(searchTerm : string) {
     this.taskService.search(searchTerm);

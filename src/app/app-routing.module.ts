@@ -18,7 +18,8 @@ const routes: Routes = [
 {path: 'forgot-password', component: ForgotPasswordComponent},
 {path: 'profil', component: ProfilComponent},
 {path: 'setting', component: SettingComponent},
-{path: '', component: HomeComponent},
+{path: 'home', component: HomeComponent},
+{path:'', component: HomeComponent},
 {path:'groups', component: GroupComponent},
 {path:'projects', component: ProjectComponent}
 ];

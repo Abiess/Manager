@@ -71,5 +71,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
     max-height: 700px;
     overflow-y: auto;
   }
-  
+  /* styles.css or tailwind.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
   

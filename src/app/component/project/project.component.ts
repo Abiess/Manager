@@ -32,7 +32,7 @@ export class ProjectComponent implements OnInit {
   constructor(private dialog : MatDialog, private taskService : TaskService) {  }
   ngOnInit() {
     
-    this.taskService.project.subscribe(projects => {
+    this.taskService.project!.subscribe(projects => {
     this.dataSource = new MatTableDataSource(projects);
     this.isLoading = false;
     });

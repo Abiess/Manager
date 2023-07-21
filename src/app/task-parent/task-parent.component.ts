@@ -25,17 +25,13 @@ export class TaskParentComponent implements OnInit{
 
   
   constructor(private dialog: MatDialog, private taskService : TaskService, private userService : AuthService) {
-    this.taskService.todo.subscribe((users)=> {
+    this.taskService.todo!.subscribe((users)=> {
         console.log(users);
     });
-    this.taskService.todo.subscribe((users)=> {
-      console.log(users);
-  });
-    
   }
   ngOnInit(): void {
       // Simulate data loading
-   this.todo.subscribe({
+   this.todo!.subscribe({
     next: () => {
       this.isLoading = false; // Set loading flag to false when data is loaded
     },

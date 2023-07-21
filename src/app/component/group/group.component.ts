@@ -32,7 +32,7 @@ export class GroupComponent implements OnInit {
 
   constructor(private dialog : MatDialog, private taskService : TaskService) {  }
   ngOnInit() {
-    this.taskService.group.subscribe(groups => {
+    this.taskService.group!.subscribe(groups => {
     this.dataSource = new MatTableDataSource(groups);
     });
   }
