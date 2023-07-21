@@ -18,6 +18,7 @@ export class NavbarComponent {
   }
   isSearchExpanded: boolean = false;
   isLoggedIn: boolean = false;
+  isProfilPhotoOpen : boolean = false;
  
   constructor(private translate : TranslationService, private taskService : TaskService, 
     private authService: AuthService) {
@@ -31,5 +32,9 @@ export class NavbarComponent {
 
   signOut(){
     this.authService.logout();
+  }
+  toggleProfilPhoto() : void {
+    this.isProfilPhotoOpen = !this.isProfilPhotoOpen;
+    console.log("hier i am " + this.isProfilPhotoOpen)
   }
 }
