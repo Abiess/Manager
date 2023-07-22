@@ -5,4 +5,5 @@ export interface Task {
     deadline : Date;
     creator : string | undefined;
     createdAm : Date;
+    frequency : string; 
   }

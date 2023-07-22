@@ -1,32 +1,68 @@
+<div  class="overflow-scroll 
+rounded-lg 
+bg-transparent ">
+  <div class="bg-gray-900 px-6 py-4 text-center text-2xl font-bold uppercase text-white">Update Task</div>
+  <div class="px-6 py-4 overflow-scroll">
+    <div class="mb-4">
+      <label class="mb-2 block font-bold text-gray-700" for="name"> Title </label>
+      <input class="focus:shadow-outline w-full appearance-none 
+      rounded border px-3 py-2 leading-tight text-gray-700 shadow 
+      focus:outline-none" id="Titel" type="text" [(ngModel)]="data.task.title" placeholder="Titel" name="Titel" />
+    </div>
+    <div class="mb-4">
+      <label class="mb-2 block font-bold text-gray-700" for="message"> Description </label>
+      <textarea class="focus:shadow-outline w-full appearance-none
+       rounded border px-3 py-2 leading-tight text-gray-700 shadow 
+       focus:outline-none" id="Description" [(ngModel)]="data.task.description"  name="Description" rows="4" 
+       placeholder="Enter any additional information"></textarea>
+    </div>
 
-<mat-card>
-  <mat-card-content>
-    <form>
-      <mat-form-field>
-        <input matInput cdkFocusInitial [(ngModel)]="data.task.title" placeholder="Titel" name="Titel">
-      </mat-form-field>
-    
-      <mat-form-field>
-        <textarea rows="4" matInput [(ngModel)]="data.task.description" placeholder="Description"  name="Description"></textarea>
-      </mat-form-field>
-    
-      <mat-form-field>
-        <input matInput [(ngModel)]="data.task.deadline" placeholder="Deadline" name="Deadline">
-      </mat-form-field>
+    <div class="mb-4">
+      <label class="mb-2 block font-bold text-gray-700" for="Deadline"> Deadline </label>
+      <input class="focus:shadow-outline w-full appearance-none rounded 
+      border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none" 
+      id="Deadline" type="Date" placeholder="Select a date" 
+      [(ngModel)]="data.task.deadline" placeholder="Deadline" name="Deadline"/>
+    </div>
+    <div class="mb-4">
+      <label class="mb-2 block font-bold text-gray-700" for="service"> frequency </label>
+      <select class="focus:shadow-outline w-full appearance-none rounded border
+       px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none" [(ngModel)]="data.task.frequency"
+       id="frequency" name="frequency">
+        <option value="">One Time Task</option>
+        <option value="haircut">Daily</option>
+        <option value="coloring">Weekly</option>
+        <option value="styling">Monthly</option>
+        <option value="facial">annually</option>
+      </select>
+    </div>
 
+
+    <div class="mb-4">
       <app-comments [taskId]="data.task.id"></app-comments>
- 
-      <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="{ task: data.task }">OK</button>
-        <button mat-button (click)="cancel()">Cancel</button>
-        <button *ngIf="data.enableDelete" mat-fab color="primary"aria-label="Delete"
-        [mat-dialog-close]="{ task: data.task, delete: true }">
-        <mat-icon color="warn">delete</mat-icon>
-      </button>
-      </div>
-    </form>
+    </div>
+    
 
-  </mat-card-content>
-</mat-card>
+    
+    <div class="mb-4 flex items-center justify-center">
+      <button class="focus:shadow-outline 
+      rounded bg-gray-900 px-4 py-2 text-white 
+      hover:bg-gray-800 focus:outline-none" 
+      [mat-dialog-close]="{ task: data.task }">
+      Update Task
+    </button>
+    <button class="focus:shadow-outline 
+    rounded bg-gray-900 px-6 py-2 text-white 
+    hover:bg-gray-800 focus:outline-none" 
+    (click)="cancel()">
+    Cancel
+  </button>
+  <button *ngIf="data.enableDelete" mat-fab color="primary"aria-label="Delete"
+  [mat-dialog-close]="{ task: data.task, delete: true }">
+  <mat-icon color="warn">delete</mat-icon>
+</button>
+    </div>
+  </div>
+</div>
 
   

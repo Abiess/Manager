@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
 import { Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 import { TaskService } from '../shared/task.service';
 import { AuthService } from '../shared/auth.service';
-import { getMatInputUnsupportedTypeError } from '@angular/material/input';
+
 
 
 @Component({
@@ -25,12 +23,11 @@ export class TaskParentComponent implements OnInit{
 
   
   constructor(private dialog: MatDialog, private taskService : TaskService, private userService : AuthService) {
-    this.taskService.todo?.subscribe((users)=> {
-        console.log(users);
+    this.taskService.todo?.subscribe((todo)=> {
+        console.log("hier bin ich users " + JSON.stringify(todo));
     });
   }
-  ngOnInit(): void {
-      // Simulate data loading
+  ngOnInit(): void {    
    this.todo?.subscribe({
     next: () => {
       this.isLoading = false; // Set loading flag to false when data is loaded
@@ -39,6 +36,25 @@ export class TaskParentComponent implements OnInit{
       this.isLoading = false; // Set loading flag to false in case of an error
     }
   });
+  this.inProgress?.subscribe({
+    next: () => {
+      this.isLoading = false; // Set loading flag to false when data is loaded
+    },
+    error: () => {
+      this.isLoading = false; // Set loading flag to false in case of an error
+    }
+  });
+  this.done?.subscribe({
+    next: () => {
+      this.isLoading = false; // Set loading flag to false when data is loaded
+    },
+    error: () => {
+      this.isLoading = false; // Set loading flag to false in case of an error
+    }
+  });
+  console.log("task is Loading is " + this.isLoading);
+  
+ 
   }
   
   newTask(): void {
@@ -58,8 +74,6 @@ export class TaskParentComponent implements OnInit{
         .catch(error => {
           console.log('Error retrieving logged-in user:', error);
         });
-        
-        console.log("task is " + JSON.stringify(result.task)  )
       });
   }
 

@@ -20,6 +20,7 @@ export class TaskDialogComponent {
       this.data.task.title = this.backupTask.title;
       this.data.task.description = this.backupTask.description;
       this.data.task.deadline = this.backupTask.deadline;
+      this.data.task.frequency = this.backupTask.frequency;
       this.dialogRef.close(this.data);
     }
 }

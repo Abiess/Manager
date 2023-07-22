@@ -51,7 +51,7 @@ openDialog(): void {
         return;
       }
       this.taskService.store1.collection('project').add(result.project);
-      console.log("project is " + result.project)
+      
     });
 }
   applyFilter(event: Event) {

@@ -19,6 +19,7 @@ export class NavbarComponent {
   isSearchExpanded: boolean = false;
   isLoggedIn: boolean = false;
   isProfilPhotoOpen : boolean = false;
+  isMenuOpen : boolean = false;
  
   constructor(private translate : TranslationService, private taskService : TaskService, 
     private authService: AuthService) {
@@ -36,5 +37,9 @@ export class NavbarComponent {
   toggleProfilPhoto() : void {
     this.isProfilPhotoOpen = !this.isProfilPhotoOpen;
     console.log("hier i am " + this.isProfilPhotoOpen)
+  }
+  toggleMenu() : void {
+    this.isMenuOpen = !this.isMenuOpen;
+   
   }
 }
