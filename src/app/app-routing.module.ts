@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { GroupComponent } from './component/group/group.component';
 import { HomeComponent } from './component/home/home.component';
+import { LandingPageComponent } from './component/landing-page/landing-page.component';
 import { LoginComponent } from './component/login/login.component';
 import { ProfilComponent } from './component/profil/profil.component';
 import { ProjectComponent } from './component/project/project.component';
@@ -19,9 +20,9 @@ const routes: Routes = [
 {path: 'profil', component: ProfilComponent},
 {path: 'setting', component: SettingComponent},
 {path: 'home', component: HomeComponent},
-{path:'', component: HomeComponent},
 {path:'groups', component: GroupComponent},
-{path:'projects', component: ProjectComponent}
+{path:'projects', component: ProjectComponent},
+{path:'', component: LandingPageComponent}
 ];
 
 @NgModule({

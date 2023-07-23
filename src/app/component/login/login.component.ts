@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
+import { NavbarService } from 'src/app/shared/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,10 @@ export class LoginComponent implements OnInit {
   email : string = '';
   password : string = '';
 
-  constructor(private auth : AuthService) { }
-
+  constructor(private auth : AuthService, private navbarService: NavbarService) { }
+  
   ngOnInit(): void {
+    this.navbarService.setShowNavbar(false);
   }
 
   login() {
