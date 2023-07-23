@@ -27,5 +27,6 @@ export interface TaskDialogData {
 export interface GroupDialogResult {
   group: Group;
   delete?: boolean;
+  
 }
 
