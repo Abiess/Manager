@@ -27,8 +27,8 @@ export class TaskService {
         this.todo = this.store.collection('todo', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Task[]>;
         this.inProgress = this.store.collection('inProgress', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Task[]>;
         this.done = this.store.collection('done', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Task[]>;
-        this.group = this.store.collection('group', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Group[]>;
-        this.project = this.store.collection('project', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Group[]>;
+        this.group = this.store.collection('group').valueChanges({ idField: 'id' }) as Observable<Group[]>;
+        this.project = this.store.collection('project').valueChanges({ idField: 'id' }) as Observable<Group[]>;
  
       }
     })

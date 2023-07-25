@@ -27,14 +27,17 @@ export class GroupComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Group | null | undefined;
   displayedColumns: string[] = [ 'name', 'description', 'createdAm'];
-  dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>();
+  //dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>();
   subDisplayedColumns: string[] = [ 'jj', 'ju', 'jujj'];
+  data : Group[] = [];
+  
 
   constructor(private dialog : MatDialog, private taskService : TaskService) {  }
   ngOnInit() {
-    this.taskService.group?.subscribe(groups => {
-    this.dataSource = new MatTableDataSource(groups);
+  this.taskService.group?.subscribe(groups => {
+      this.data = groups;
     });
+  
   }
 openDialog(): void {  
   const dialogRef = this.dialog.open(GroupDialogComponent, {
@@ -55,15 +58,9 @@ openDialog(): void {
 }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+   // this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-   
-    
-
-  
-
-  }
+}
   
 
   

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   isLoggedIn: boolean = false;
 
+
   constructor(private fireauth: AngularFireAuth, private router : Router) {
     this.initializeAuthStateListener();
    }
