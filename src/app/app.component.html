@@ -1,5 +1,16 @@
-<ng-container *ngIf="showNavBar">
-    <app-navbar></app-navbar>
-  </ng-container>
-<router-outlet></router-outlet>
+<nav class="fixed top-0 left-0 w-full p-4 text-white">
+  <app-navbar></app-navbar>
+</nav>
 
+<div class="pt-12">
+  <div class="flex">
+    <aside id="default-sidebar" class="w-64 h-screen bg-gray-100">
+    
+    </aside>
+
+    <main class="flex-1 p-12 bg-white ml-64">
+      <!-- Main content goes here -->
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
