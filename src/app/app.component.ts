@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   showNavBar: boolean = false;
   constructor(private authService: AuthService) {}
   ngOnInit(): void {
-    this.showNavBar = this.authService.isLoggedIn;
+    this.authService.getLoggedInUser().then(user =>
+      this.showNavBar = !!user )
+    console.log("app component ts navbar "+ this.showNavBar);
   }
-
-
 }

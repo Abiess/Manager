@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { GoogleAuthProvider, UserInfo } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -20,7 +19,8 @@ export class AuthService {
    private initializeAuthStateListener(): void {
     this.fireauth.authState.subscribe((user : any ) => {
       this.isLoggedIn = !!user;
-      console.log("the user logged in is " + JSON.stringify(!!user));
+      console.log("initializeAuthStateListener() " + JSON.stringify(user));
+      
     });
   }
 
@@ -61,6 +61,7 @@ export class AuthService {
       localStorage.removeItem('token');
       this.router.navigate(['/login']);
       this.isLoggedIn = false;
+      
       console.log("bin im logout");
     }, err => {
       alert(err.message);
@@ -102,7 +103,7 @@ export class AuthService {
       this.fireauth.onAuthStateChanged((user) => {
         if (user) {
           resolve(user);
-          console.log("bin im Service " + JSON.stringify(user))
+          console.log("getLoggedInUser()" + JSON.stringify(user))
         } else {
           resolve(null);
         }

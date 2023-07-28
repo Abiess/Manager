@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { getAdditionalUserInfo, user } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { UUID } from 'angular2-uuid';
 import { Observable, of } from 'rxjs';
 import { Group } from '../model/Group';
+import { Project } from '../model/project';
 import { Task } from '../task/task';
 import { AuthService } from './auth.service';
 
@@ -17,7 +16,7 @@ export class TaskService {
   inProgress!: Observable<Task[]>;
   done!: Observable<Task[]>;
   group!: Observable<Group[]>;
-  project!: Observable<Group[]>;
+  project!: Observable<Project[]>;
 
   constructor(private store: AngularFirestore, private authService : AuthService ) {
     this.authService.getLoggedInUser().then(userInfo => {
@@ -28,7 +27,7 @@ export class TaskService {
         this.inProgress = this.store.collection('inProgress', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Task[]>;
         this.done = this.store.collection('done', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Task[]>;
         this.group = this.store.collection('group').valueChanges({ idField: 'id' }) as Observable<Group[]>;
-        this.project = this.store.collection('project').valueChanges({ idField: 'id' }) as Observable<Group[]>;
+        this.project = this.store.collection('project').valueChanges({ idField: 'id' }) as Observable<Project[]>;
  
       }
     })

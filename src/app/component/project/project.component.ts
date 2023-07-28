@@ -26,16 +26,45 @@ export class ProjectComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Project | null | undefined;
   displayedColumns: string[] = [ 'name', 'description', 'createdAm'];
-  dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
-  subDisplayedColumns: string[] = [ 'jj', 'ju', 'jujj'];
+  dataSource: Project[] = []
+  columns: string[] = [ 'Name', 'Tasks', 'Budget','Deadline', 'Members/Groups'];
+
+    dummyProjects: Project[] = [
+    {
+      id: '1',
+      name: 'Project Alpha',
+      description: 'This is the first project',
+      budget: '$10,000',
+      tasks: ['Task 1', 'Task 2', 'Task 3'],
+      deadline: new Date('2023-12-31'),
+      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
+    },
+    {
+      id: '2',
+      name: 'Project Beta',
+      description: 'Another project in progress',
+      budget: '$15,000',
+      tasks: ['Task A', 'Task B', 'Task C'],
+      deadline: new Date('2023-11-15'),
+      member: ['Alice Johnson', 'Robert Brown'],
+    },
+    {
+      name: 'Project Gamma',
+      description: 'A new project',
+      budget: '$8,000',
+      tasks: ['Task X', 'Task Y'],
+      deadline: new Date('2024-02-28'),
+      member: ['Ella Davis', 'Michael Lee', 'Sophia Wilson'],
+    },
+  ];
 
   constructor(private dialog : MatDialog, private taskService : TaskService) {  }
   ngOnInit() {
-    
-    this.taskService.project?.subscribe(projects => {
-    this.dataSource = new MatTableDataSource(projects);
-    this.isLoading = false;
-    });
+    this.dataSource = this.dummyProjects;
+    // this.taskService.project?.subscribe(projects => {
+    // this.dataSource =  projects;
+   // this.isLoading = false;
+  //  });
   }
 openDialog(): void {  
   const dialogRef = this.dialog.open(ProjectDialogComponent, {
@@ -54,10 +83,10 @@ openDialog(): void {
       
     });
 }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
 
   }
   
