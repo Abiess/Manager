@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Page Title</title>
+  <title>MADA-Management</title>
   <!-- Include the Tailwind CSS CDN link -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -12,18 +12,18 @@
 <body class="flex"> <!-- Use flexbox for two-column layout -->
 
   <!-- Sidebar -->
-  <div class="w-1/6 h-screen bg-indigo-100 sticky top-50 overflow-hidden"> <!-- Use overflow-hidden to prevent content overflow -->
+  <div class="w-1/6 h-screen bg-indigo-100 sticky  overflow-y-scroll"> <!-- Use overflow-hidden to prevent content overflow -->
     <!-- Your sidebar content goes here -->
     <app-sidebar></app-sidebar>
   </div>
 
   <!-- Main Content -->
-  <div class="flex-1 top-50"> <!-- Use flex-1 to make the content fill the remaining space -->
-    <div class="fixed top-0 left-0 w-full p-4 bg-green-100 text-white">
+  <div class="flex-1"> <!-- Use flex-1 to make the content fill the remaining space -->
+    <div class="fixed top-0 left-40 w-screen  bg-green-100 text-white">
       <!-- Navbar -->
       <app-navbar></app-navbar>
     </div>
-    <main class="pt-50 bg-red-100">
+    <main class="pt-14">
       <!-- Main content goes here -->
       <router-outlet></router-outlet>
     </main>

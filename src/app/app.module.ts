@@ -57,6 +57,7 @@ import { ProjectDialogComponent } from './component/project-dialog/project-dialo
 import { SpinnerComponent } from './shared/spinner/spinner.component'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LandingPageComponent } from './component/landing-page/landing-page.component';
+import { OverviewComponent } from './component/overview/overview.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,6 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProjectDialogComponent,
     SpinnerComponent,
     LandingPageComponent,
+    OverviewComponent,
     
 
   
