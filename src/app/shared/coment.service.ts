@@ -5,6 +5,9 @@ import { Observable, of } from 'rxjs';
 import { Comment} from '../model/coment';
 import { UUID } from 'angular2-uuid';
 import { uuidv4 } from '@firebase/util';
+import { JsonPipe } from '@angular/common';
+
+
 
 
 
@@ -16,6 +19,7 @@ export class CommentService {
   //comments = this.store.collection('comment').valueChanges({ idField: 'id' }) as unknown as Observable<Comment[]>;
   
   constructor(private store: AngularFirestore) {
+
      
   }
   comments: Comment[] = [
@@ -23,14 +27,17 @@ export class CommentService {
       id: 1,
       text: "This is the first comment",
       TaskId : "",
+      createdAm: new Date(),
     },
     {
       id: 2,
       text: "This is the second comment", 
-      TaskId : ""
+      TaskId : "",
+      createdAm: new Date(),
 
     }
   ];
+  
   //comment = this.store.collection<Comment>('comment').valueChanges();
   test = this.store.collection('comment').valueChanges() as Observable<Comment[]>;
   
@@ -54,7 +61,8 @@ export class CommentService {
     
     return of(comments);
 }
-  postComment(commentText: string, commentId?: UUID, _taskId? : string): 
+  postComment(commentText: string, commentId?: UUID, _taskId? : string
+    ): 
   Observable<Comment | undefined> {
     console.log("commet id is " + commentId+ "and uuid is  " + uuidv4() );
     const isNewComment: boolean = commentId === null || commentId === undefined;
@@ -62,7 +70,9 @@ export class CommentService {
       
       id: uuidv4(),
       text: commentText, 
-      TaskId: _taskId
+      TaskId: _taskId,
+      createdAm: new Date(),
+      
     };
     
     if (isNewComment) {
@@ -72,6 +82,7 @@ export class CommentService {
        this.store.collection('comment').add(newComment)
       return of(newComment);
     } else {
+      console.log("hier bin ich wieder beim comment " + commentText)
       this.comments = this.comments.map(comment => comment.id === commentId ? 
         {
           ...comment,
@@ -80,6 +91,7 @@ export class CommentService {
         : comment
       );
       const updatedComment = this.comments.find(comment => comment.id === commentId);
+      console.log("hier bin ich beim Updated " + (JSON.stringify(this.comments)))
       
       return of(updatedComment);
     }

@@ -53,13 +53,15 @@ export class TaskParentComponent implements OnInit{
     }
   });
   console.log("task is Loading is " + this.isLoading);
-  
- 
   }
   
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '470px',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       data: {
         task: {},
       },
@@ -79,7 +81,11 @@ export class TaskParentComponent implements OnInit{
 
   editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '500px',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       data: {
         task,
         enableDelete: true,

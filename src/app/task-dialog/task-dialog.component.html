@@ -1,8 +1,7 @@
-<div  class="overflow-scroll 
-rounded-lg 
-bg-transparent ">
-  <div class="bg-gray-900 px-6 py-4 text-center text-2xl font-bold uppercase text-white">Update Task</div>
-  <div class="px-6 py-4 overflow-scroll">
+<div class="overflow-y-scroll">
+  <div class="bg-gray-900 px-6 py-4 text-center text-2xl font-bold uppercase
+   text-white">Create/Update Task</div>
+  <div class="px-6 py-4">
     <div class="mb-4">
       <label class="mb-2 block font-bold text-gray-700" for="name"> Title </label>
       <input class="focus:shadow-outline w-full appearance-none 
@@ -30,10 +29,10 @@ bg-transparent ">
        px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none" [(ngModel)]="data.task.frequency"
        id="frequency" name="frequency">
         <option value="">One Time Task</option>
-        <option value="haircut">Daily</option>
-        <option value="coloring">Weekly</option>
-        <option value="styling">Monthly</option>
-        <option value="facial">annually</option>
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Monthly">Monthly</option>
+        <option value="annually">annually</option>
       </select>
     </div>
 
