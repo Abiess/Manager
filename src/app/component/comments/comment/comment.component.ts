@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Timestamp } from 'firebase/firestore';
 import { Comment } from 'src/app/model/coment';
 
 @Component({
@@ -12,6 +14,8 @@ export class CommentComponent {
   @Input() comment: Comment | undefined;
   @Input() index: number | undefined;
   @Input() comments: Comment[] | undefined;
+
+constructor(private datePipe : DatePipe) {}
   
 
   editComment(): void {
@@ -24,6 +28,11 @@ export class CommentComponent {
 
   disableCommentEditMode(isEditMode: boolean) {
     this.isCommentInEditMode = isEditMode;
+  }
+  formatDateFromTimestamp(timestamp: Date) {
+    const date: Date = timestamp; // Convert Timestamp to Date
+    var date1 = this.datePipe.transform(date, 'dd-MM-yy')
+    return date1;// Format the Date using DatePipe
   }
 
 }

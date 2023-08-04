@@ -3,7 +3,7 @@
       <img src="https://randomuser.me/api/portraits/men/97.jpg" alt="Avatar" class="w-12 h-12 rounded-full mr-4">
       <div>
           <div class="text-lg font-medium text-gray-800">{{comment!.TaskId}}</div>
-          <div class="text-gray-500">{{comment!.createdAm}}</div>
+          <div class="text-gray-500">{{ formatDateFromTimestamp(comment!.createdAm) }}</div>
       </div>
   </div>
   <p class="text-lg leading-relaxed mb-6">{{comment!.text}}</p>

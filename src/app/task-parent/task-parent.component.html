@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <button (click)="newTask()" mat-button>
       <mat-icon>add</mat-icon> {{'Add Task' | translate}}</button>
-,
+
   <div *ngIf="isLoading ; else display">
     <app-spinner></app-spinner>
   </div>

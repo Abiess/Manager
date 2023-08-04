@@ -1,6 +1,9 @@
-<form #form="ngForm" (submit)="postComment(form, comment?.id)">
-    <div class="form-group">
-      <textarea
+<form #form="ngForm"  class="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20"
+ (submit)="postComment(form, comment?.id)">
+    <div class="form-group" class="px-3 mb-2 mt-2">
+      <textarea class="w-full bg-gray-100 rounded border
+       border-gray-400 leading-normal resize-none h-20 py-2 px-3 
+       font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
         id="commentInput"
         #commentBox="ngModel"
         [ngModel]="comment?.text"
@@ -13,6 +16,7 @@
       ></textarea>
       <button
         type="submit"
+        class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
         id="buttonSubmit"
         class="btn btn-primary mr-2"
         *ngIf="isCommentInEditMode"
@@ -21,6 +25,7 @@
       </button>
       <button
         type="button"
+        class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
         id="buttonCancel"
         class="btn btn-link"
         (click)="cancelComment(false)"
@@ -31,12 +36,4 @@
     </div>
   </form>
 
-  <form class="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20">
-    <div class="px-3 mb-2 mt-2">
-        <textarea placeholder="comment" class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>
-    </div>
-    <div class="flex justify-end px-4">
-        <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value="Comment">
-    </div>
-</form>
   
