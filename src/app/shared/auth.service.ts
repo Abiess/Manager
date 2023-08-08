@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GoogleAuthProvider, UserInfo } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { updateProfile } from 'firebase/auth';
 
 
 
@@ -44,16 +45,30 @@ export class AuthService {
   }
 
   // register method
-  register(email : string, password : string) {
-    this.fireauth.createUserWithEmailAndPassword(email, password).then( res => {
-      alert('Registration Successful');
-      this.sendEmailForVarification(res.user);
-      this.router.navigate(['/login']);
-    }, err => {
-      alert(err.message);
-      this.router.navigate(['/register']);
-    })
+  register(email: string, password: string, displayName: string) {
+    this.fireauth
+      .createUserWithEmailAndPassword(email, password)
+      .then(
+        userCred => {
+          if (userCred.user) {
+            userCred.user.updateProfile({ displayName: displayName })
+              .then(() => {
+                alert('Profile updated successfully ' + displayName);
+                
+              })
+              .catch(error => {
+                console.error('Error updating profile:', error);
+              });
+          }
+        },
+        err => {
+          alert(err.message);
+          this.router.navigate(['/errorPage']);
+        }
+      );
   }
+  
+  
 
   // sign out
   logout() {

@@ -58,6 +58,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LandingPageComponent } from './component/landing-page/landing-page.component';
 import { OverviewComponent } from './component/overview/overview.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -91,6 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SpinnerComponent,
     LandingPageComponent,
     OverviewComponent,
+    DashboardComponent,
     
 
   
