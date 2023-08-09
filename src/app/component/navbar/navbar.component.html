@@ -1,114 +1,98 @@
-<div class="text-right">
-  <nav class="bg-blue-600">
-    <div class="pl- -ml-1 -mr-2 max-w-9xl sm:px-1 lg:px-8">
-      <div class="flex h-14 items-center justify-between">
-        <div class="absolute inset-y-0 left-0 flex items-start sm:hidden">
-          <!-- Mobile menu button-->
-          <button (click)="toggleMenu()" type="button" class="inline-flex items-start 
-          justify-center rounded-sm p-3 text-gray-4 hover:text-white 
-          focus:outline-none focus:1 focus:ring-inset focus:ring-black" 
-          aria-controls="mobile-menu" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <!--
-              Icon when menu is closed.
-  
-              Menu open: "hidden", Menu closed: "block"
-            -->
-            <!--Hamburger button-->
-          <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" 
-          stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="rounded"
-               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>  
-            <!--
-              Icon when menu is open.
-  
-              Menu open: "block", Menu closed: "hidden"
-            -->
-           
-          </button>
-        </div>
-
-        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-1">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a routerLink="/" class="rounded-md bg-gray-900 px-3 py-2 
-              text-sm font-medium text-white" aria-current="page">Home</a>
-              <a routerLink="/projects" class="rounded-md px-3 py-2 
-              text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-              <a routerLink="/groups" class="rounded-md px-3 py-2 
-              text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Groups</a>
-              <a routerLink="/task-parent" class="rounded-md px-3 py-2 
-              text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Tasks</a>
-            </div>
-          </div>
-
-          <div class="relative ml-9 mt-0 rounded-md shadow-sm">
-            <input type="text" name="search" id="search" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="search in" />
-            <div class="absolute inset-y-0 right-0 flex items-center">
-              <select id="searchArea" name="searchArea" class="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
-                <option>Todo</option>
-                <option>InProgress</option>
-                <option>Done</option>
-                <option>Project</option>
-                <option>Group</option>
-              </select>
-            </div>
-          </div>
-        </div>
-     
-      </div>
+<div class="fixed w-full flex items-center 
+justify-between h-14 text-white z-10">
+  <div class="flex items-center justify-start md:justify-center
+   pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
+    <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
+    <span class="hidden md:block">MADA</span>
+  </div>
+  <div class="flex justify-between items-center h-14 bg-blue-800 dark:bg-gray-800 header-right">
+    <div class="bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200">
+      <button class="outline-none focus:outline-none">
+        <svg class="w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round"
+         stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      </button>
+      <input type="search" name="" id="" placeholder="Search" class="w-full pl-3 text-sm text-black outline-none focus:outline-none bg-transparent" />
     </div>
-
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu" *ngIf="isMenuOpen">
-      <div class="space-y-1 px-2 pb-3 pt-2">
-        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a routerLink="/" class="block rounded-md bg-gray-900 
-        px-3 py-2 text-base font-medium text-white" aria-current="page">Home</a>
-        <a routerLink="/projects" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-        <a routerLink="/groups" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Groups</a>
-        <a routerLink="/task-parent" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Tasks</a>
-        <div class=" inset-y-12 right-0 flex items-end pr-2 sm:static 
-        sm:inset-auto sm:ml-6 sm:pr-0">
-          <button type="button" class="rounded-md bg-gray-800 p-1 
-          text-gray-400 hover:text-white focus:outline-none focus:ring-2
-           focus:ring-white focus:ring-offset-2
-           focus:ring-offset-gray-800">
-            <span class="sr-only">View notifications</span>
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-            </svg>
-          </button>
-
-          <div class="relative ml-3" (click)="toggleProfilPhoto()">
-              <button type="button" class="flex rounded-full
-               bg-gray-800 text-sm focus:outline-none focus:ring-2
-                focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                 id="user-menu-button" [attr.aria-expanded]="isProfilPhotoOpen ? 'true' : 'false'" 
-                 aria-haspopup="true">
-             
-                <img class="h-8 w-8 rounded-full" 
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-              </button>
+    <ul class="flex items-center">
+      <li>
+        <button
+          aria-hidden="true"
+          
+          class="group p-2 transition-colors duration-200 rounded-full shadow-md bg-blue-200 hover:bg-blue-200 dark:bg-gray-50 dark:hover:bg-gray-200 text-gray-900 focus:outline-none"
+        >
+          <svg
+            x-show="isDark"
+            width="24"
+            height="24"
+            class="fill-current text-gray-700 group-hover:text-gray-500 group-focus:text-gray-700 dark:text-gray-700 dark:group-hover:text-gray-500 dark:group-focus:text-gray-700"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke=""
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+            />
+          </svg>
+          <svg
+            x-show="!isDark"
+            width="24"
+            height="24"
+            class="fill-current text-gray-700 group-hover:text-gray-500 group-focus:text-gray-700 dark:text-gray-700 dark:group-hover:text-gray-500 dark:group-focus:text-gray-700"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke=""
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
+      </li>
+      <li>
+        <div class="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
+      </li>
+      <li>
+        <a href="#" class="flex items-center mr-4 hover:text-blue-100">
+          <span class="inline-flex mr-1">
            
 
-            <div *ngIf="isProfilPhotoOpen" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-              <!-- Active: "bg-gray-100", Not Active: "" -->
-              <a routerLink="profil" class="block px-4 py-2 text-sm
-               text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-              <a routerLink="setting" class="block px-4 py-2 text-sm
-               text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-              <a class="block px-4 py-2 text-sm text-gray-700"
-               role="menuitem" tabindex="-1" id="user-menu-item-2" routerLink="/home" *ngIf="isLoggedIn" (click)="signOut()">Sign out</a>
-              <a class="block px-4 py-2 text-sm text-gray-700"
-               role="menuitem" tabindex="-1" id="user-menu-item-3" 
-               *ngIf="!isLoggedIn" mat-menu-item routerLink="/login">Sign in</a>
-            </div>
+            <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+              <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
           </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+          
+<!-- Dropdown menu -->
+<div id="userDropdown" class="z-10 hidden bg-white divide-y
+divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700
+dark:divide-gray-600">
+<div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+<div>Bonnie Green</div>
+<div class="font-medium truncate">name@flowbite.com</div>
+</div>
+<a routerLink="profil" class="block px-4 py-2 text-sm
+text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+<a routerLink="setting" class="block px-4 py-2 text-sm
+text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+<a class="block px-4 py-2 text-sm text-gray-700"
+role="menuitem" tabindex="-1" id="user-menu-item-2" routerLink="/home">Sign out</a>
+<a class="block px-4 py-2 text-sm text-gray-700"
+role="menuitem" tabindex="-1" id="user-menu-item-3" 
+mat-menu-item routerLink="/login">Sign in</a>
+<div class="py-1">
+<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+</div>
+</div>
+
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
