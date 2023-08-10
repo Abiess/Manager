@@ -1,7 +1,6 @@
-<div class="fixed w-full flex items-center 
-justify-between h-14 text-white z-10">
-  <div class="flex items-center justify-start md:justify-center
-   pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
+
+<div class="fixed w-full flex items-center justify-between h-14 text-white z-10">
+  <div class="flex items-center justify-start md:justify-start pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
     <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
     <span class="hidden md:block">MADA</span>
   </div>
@@ -13,86 +12,38 @@ justify-between h-14 text-white z-10">
       </button>
       <input type="search" name="" id="" placeholder="Search" class="w-full pl-3 text-sm text-black outline-none focus:outline-none bg-transparent" />
     </div>
-    <ul class="flex items-center">
-      <li>
-        <button
-          aria-hidden="true"
-          
-          class="group p-2 transition-colors duration-200 rounded-full shadow-md bg-blue-200 hover:bg-blue-200 dark:bg-gray-50 dark:hover:bg-gray-200 text-gray-900 focus:outline-none"
-        >
-          <svg
-            x-show="isDark"
-            width="24"
-            height="24"
-            class="fill-current text-gray-700 group-hover:text-gray-500 group-focus:text-gray-700 dark:text-gray-700 dark:group-hover:text-gray-500 dark:group-focus:text-gray-700"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke=""
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-            />
-          </svg>
-          <svg
-            x-show="!isDark"
-            width="24"
-            height="24"
-            class="fill-current text-gray-700 group-hover:text-gray-500 group-focus:text-gray-700 dark:text-gray-700 dark:group-hover:text-gray-500 dark:group-focus:text-gray-700"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke=""
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            />
-          </svg>
+    <div class="relative ml-3" (click)="toggleProfilPhoto()">
+      <div>
+        <button type="button" class="relative mr-3 inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600" [attr.aria-expanded]="isProfilPhotoOpen ? 'true' : 'false'" aria-haspopup="true">
+          <span class="font-medium text-gray-600 dark:text-gray-300">{{userInfo?.displayName?.substring(0,1)}}</span>
+          <!-- <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" /> -->
         </button>
-      </li>
-      <li>
-        <div class="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
-      </li>
-      <li>
-        <a href="#" class="flex items-center mr-4 hover:text-blue-100">
-          <span class="inline-flex mr-1">
-           
+      </div>
 
-            <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-              <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-          </div>
-          
-<!-- Dropdown menu -->
-<div id="userDropdown" class="z-10 hidden bg-white divide-y
-divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700
-dark:divide-gray-600">
-<div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-<div>Bonnie Green</div>
-<div class="font-medium truncate">name@flowbite.com</div>
-</div>
-<a routerLink="profil" class="block px-4 py-2 text-sm
-text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-<a routerLink="setting" class="block px-4 py-2 text-sm
-text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-<a class="block px-4 py-2 text-sm text-gray-700"
-role="menuitem" tabindex="-1" id="user-menu-item-2" routerLink="/home">Sign out</a>
-<a class="block px-4 py-2 text-sm text-gray-700"
-role="menuitem" tabindex="-1" id="user-menu-item-3" 
-mat-menu-item routerLink="/login">Sign in</a>
-<div class="py-1">
-<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-</div>
-</div>
-
-          </span>
-        </a>
-      </li>
-    </ul>
+      <div *ngIf="isProfilPhotoOpen" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+        <!-- Active: "bg-gray-100", Not Active: "" -->
+        <div *ngIf="isProfilPhotoOpen"  id="userDropdown" class="z-10 
+        bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+           <div>{{userInfo?.displayName}}</div>
+           <div class="font-medium truncate">{{userInfo?.email}}</div>
+         </div>
+         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"  aria-labelledby="avatarButton">
+           <li>
+             <a routerLink="profil" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+           </li>
+           <li>
+             <a routerLink="setting" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+           </li>
+           <li>
+             <a routerLink="/home" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
+           </li>
+         </ul>
+         <div class="py-1">
+           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
+            dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="isLoggedIn" (click)="signOut()">Sign out</a>
+           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!isLoggedIn" mat-menu-item routerLink="/login">Sign in</a>
+         </div>
+     </div>
   </div>
 </div>

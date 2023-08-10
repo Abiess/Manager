@@ -1,6 +1,7 @@
 import { useAnimation } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User, UserInfo } from '@angular/fire/auth';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { TaskService } from 'src/app/shared/task.service';
 import { TranslationService } from 'src/app/shared/translation.service';
@@ -10,7 +11,7 @@ import { TranslationService } from 'src/app/shared/translation.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
   selectedoption: string = 'Todo';
 
   switchLanguage(language: string) {
@@ -20,13 +21,32 @@ export class NavbarComponent {
   isLoggedIn: boolean = false;
   isProfilPhotoOpen : boolean = false;
   isMenuOpen : boolean = false;
+  userInfo!: UserInfo | null;
+  userInfoSubject: Subject<any> = new Subject<any>(); //
+  
+
  
   constructor(private translate : TranslationService, private taskService : TaskService, 
     private authService: AuthService) {
-      this.authService.getLoggedInUser().then(userInfo=>{
-        this.isLoggedIn = !!userInfo
-   })
+     
   }
+
+
+  ngOnInit(): void {
+    this.authService.getLoggedInUser().then(userInfo => {
+      this.isLoggedIn = !!userInfo;
+      this.userInfo = userInfo;
+      this.userInfoSubject.next(userInfo); // Emit the user info to the Subject
+    });
+
+    // Subscribe to changes in user info
+    this.userInfoSubject.subscribe(updatedUserInfo => {
+      this.userInfo = updatedUserInfo;
+    });
+
+    };
+   
+  
   search(searchTerm : string) {
     this.taskService.search(searchTerm);
     }
@@ -36,7 +56,6 @@ export class NavbarComponent {
   }
   toggleProfilPhoto() : void {
     this.isProfilPhotoOpen = !this.isProfilPhotoOpen;
-    console.log("hier i am " + this.isProfilPhotoOpen)
   }
   toggleMenu() : void {
     this.isMenuOpen = !this.isMenuOpen;
