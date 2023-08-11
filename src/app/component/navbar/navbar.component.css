@@ -1,29 +1,2 @@
-.fill {
-    flex: 1 1 auto;
-  }
-  
 
-  
-  .search-form-field.expand {
-    width: 200px;
-  }
-  mat-form-field {
-    width: 300px;
-    margin-top: 20px;
-    background-color: transparent;
-    height: 70px;
-  }
-
-  button {
-    margin-left: 10px;
-  }
-
-  .mat-toolbar {
-    min-height: 20px;
-  }
-  mat-icon {
-    font-size: 24px;
-    color: purple;
-  }
-  
  
