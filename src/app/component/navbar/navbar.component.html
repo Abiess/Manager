@@ -8,25 +8,42 @@
     <div class="bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200">
       <button class="outline-none focus:outline-none">
         <svg class="w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round"
-         stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+         stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+         <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
       </button>
-      <input type="search" name="" id="" placeholder="Search" class="w-full pl-3 text-sm text-black outline-none focus:outline-none bg-transparent" />
+      <input type="search" name="" id="" placeholder="Search" class="w-full pl-3 text-sm
+       text-black outline-none focus:outline-none bg-transparent" />
     </div>
     <div class="relative ml-3" (click)="toggleProfilPhoto()">
       <div>
-        <button type="button" class="relative mr-3 inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600" [attr.aria-expanded]="isProfilPhotoOpen ? 'true' : 'false'" aria-haspopup="true">
-          <span class="font-medium text-gray-600 dark:text-gray-300">{{userInfo?.displayName?.substring(0,1)}}</span>
+        <button type="button" class="relative mr-3 
+        inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full
+         dark:bg-gray-600" [attr.aria-expanded]="isProfilPhotoOpen ? 'true' : 'false'" aria-haspopup="true">
+       
+         <div *ngIf="userInfo">
+          <span class="font-medium text-gray-600 dark:text-gray-300">
+            {{userInfo.displayName?.substring(0, 1)}}
+          </span>
+        </div>
+        <div *ngIf="!userInfo">
+          <!-- Handle case where userInfo is null -->
+          <span class="font-medium text-gray-600 dark:text-gray-300">
+            XX
+          </span>
+        </div>
           <!-- <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" /> -->
         </button>
       </div>
-
-      <div *ngIf="isProfilPhotoOpen" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+      <div *ngIf="isProfilPhotoOpen && userInfo" class="absolute right-0 z-10 mt-2 w-48 origin-top-right 
+      rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" 
+      role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
         <!-- Active: "bg-gray-100", Not Active: "" -->
         <div *ngIf="isProfilPhotoOpen"  id="userDropdown" class="z-10 
         bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
          <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-           <div>{{userInfo?.displayName}}</div>
-           <div class="font-medium truncate">{{userInfo?.email}}</div>
+           <div>{{userInfo.displayName}}</div>
+           <div class="font-medium truncate">{{userInfo.email}}</div>
          </div>
          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"  aria-labelledby="avatarButton">
            <li>
@@ -44,6 +61,28 @@
             dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="isLoggedIn" (click)="signOut()">Sign out</a>
            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!isLoggedIn" mat-menu-item routerLink="/login">Sign in</a>
          </div>
+        
      </div>
-  </div>
+      </div>
+
+      <!--if userinfo not available-->
+      <div *ngIf="isProfilPhotoOpen && !userInfo" class="absolute right-0 z-10 mt-2 w-48 origin-top-right 
+      rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" 
+      role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+        <!-- Active: "bg-gray-100", Not Active: "" -->
+        <div *ngIf="isProfilPhotoOpen"  id="userDropdown" class="z-10 
+        bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+           <div>noch</div>
+           <div class="font-medium truncate">Nicht angemeldet</div>
+         </div>
+     
+         <div class="py-1">
+           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
+            dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="isLoggedIn" (click)="signOut()">Sign out</a>
+           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!isLoggedIn" mat-menu-item routerLink="/login">Sign in</a>
+         </div>
+        
+     </div>
+      </div>
 </div>

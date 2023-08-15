@@ -20,7 +20,7 @@ export class AuthService {
    private initializeAuthStateListener(): void {
     this.fireauth.authState.subscribe((user : any ) => {
       this.isLoggedIn = !!user;
-      console.log("initializeAuthStateListener() " + JSON.stringify(user));
+
       
     });
   }
@@ -67,17 +67,15 @@ export class AuthService {
         }
       );
   }
-  
-  
 
   // sign out
   logout() {
     this.fireauth.signOut().then( () => {
       localStorage.removeItem('token');
-      this.router.navigate(['/login']);
+    
       this.isLoggedIn = false;
-      
-      console.log("bin im logout");
+      this.router.navigate(['/']);
+ 
     }, err => {
       alert(err.message);
     })

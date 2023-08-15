@@ -23,14 +23,11 @@ export class NavbarComponent implements OnInit{
   isMenuOpen : boolean = false;
   userInfo!: UserInfo | null;
   userInfoSubject: Subject<any> = new Subject<any>(); //
-  
 
- 
   constructor(private translate : TranslationService, private taskService : TaskService, 
     private authService: AuthService) {
      
   }
-
 
   ngOnInit(): void {
     this.authService.getLoggedInUser().then(userInfo => {
