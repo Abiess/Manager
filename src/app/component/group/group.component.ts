@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Group } from '../../model/Group';
 import { TaskService } from 'src/app/shared/task.service';
 import { DataSource } from '@angular/cdk/collections';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-group',
@@ -30,30 +31,39 @@ export class GroupComponent implements OnInit {
   //dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>();
   subDisplayedColumns: string[] = [ 'jj', 'ju', 'jujj'];
   data : Group[] = [];
+  columns: string[] = [ 'Name', 'created by', 'Members', 'Status','Action'];
   
 
-  constructor(private dialog : MatDialog, private taskService : TaskService) {  }
+  constructor(private dialog : MatDialog, private taskService : TaskService, private userService : AuthService) {  }
   ngOnInit() {
   this.taskService.group?.subscribe(groups => {
       this.data = groups;
     });
   
   }
-openDialog(): void {  
+
+
+newGroup(): void {
   const dialogRef = this.dialog.open(GroupDialogComponent, {
-    width: '500px',
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    height: '100%',
+    width: '100%',
+    panelClass: 'full-screen-modal',
     data: {
       group: {},
     },
   });
-  dialogRef
-    .afterClosed()
-    .subscribe((result: GroupDialogResult) => {
-      if (!result) {
-        return;
-      }
-      this.taskService.store1.collection('group').add(result.group);
-      console.log("group is " + result.group)
+  dialogRef.afterClosed().subscribe((result: GroupDialogResult) => {
+      if (!result) {return;}
+      this.userService.getLoggedInUser().then(userInfo => {
+         result.group.creator = userInfo?.uid;
+         result.group.createdAm = new Date();
+         this.taskService.store1.collection('group').add(result.group);
+      })
+      .catch(error => {
+        console.log('Error retrieving logged-in user:', error);
+      });
     });
 }
   applyFilter(event: Event) {
