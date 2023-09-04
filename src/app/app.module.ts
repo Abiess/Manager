@@ -20,6 +20,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { initializeFirestore } from '@firebase/firestore';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AppRoutingModule } from './app-routing.module';
@@ -59,12 +60,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LandingPageComponent } from './component/landing-page/landing-page.component';
 import { OverviewComponent } from './component/overview/overview.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { TestComponent } from './component/test/test.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
-
 
 @NgModule({
   
@@ -81,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommentFormComponent,
     NavbarComponent,
     ProfilComponent,
+
     
     SidebarComponent,
     SettingComponent,
@@ -93,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LandingPageComponent,
     OverviewComponent,
     DashboardComponent,
+    TestComponent,
     
 
   
@@ -113,11 +116,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCardModule, 
     DragDropModule, 
     MatButtonModule,
+    
     MatDialogModule,
     FormsModule,
     MatInputModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
    AngularFirestoreModule,
+   AngularFireStorageModule,
    AppRoutingModule,
    ReactiveFormsModule,
    MatMenuModule,
@@ -132,12 +137,7 @@ export function HttpLoaderFactory(http: HttpClient) {
    ScrollingModule,
    MatTableModule,
    MatProgressSpinnerModule,
-   
 
-
-
-   
-    
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase }

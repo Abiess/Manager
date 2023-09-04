@@ -6,11 +6,11 @@ import { GroupComponent } from './component/group/group.component';
 import { HomeComponent } from './component/home/home.component';
 import { LandingPageComponent } from './component/landing-page/landing-page.component';
 import { LoginComponent } from './component/login/login.component';
-import { OverviewComponent } from './component/overview/overview.component';
 import { ProfilComponent } from './component/profil/profil.component';
 import { ProjectComponent } from './component/project/project.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SettingComponent } from './component/setting/setting.component';
+import { TestComponent } from './component/test/test.component';
 import { TaskParentComponent } from './task-parent/task-parent.component';
 
 
@@ -26,6 +26,7 @@ const routes: Routes = [
 {path:'projects', component: ProjectComponent},
 {path:'', component: LandingPageComponent},
 {path:'dashboard', component: DashboardComponent},
+{path:'test', component: TestComponent},
 
 ];
 
