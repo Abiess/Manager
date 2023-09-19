@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit {
   email : string = '';
   password : string = '';
   displayName : string = '';
+  progress = 0;
 
   constructor(private auth : AuthService, private storage : AngularFireStorage) { }
 
@@ -47,15 +48,15 @@ export class RegisterComponent implements OnInit {
     }
   }
   uploadImage(file: File) {
-    const filePath = `images/${file.name}`;
+    const filePath = `imageprofil/${file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = storageRef.put(file);
   
     uploadTask.snapshotChanges().subscribe(
       (snapshot) => {
         // Image upload progress
-        const progress = (snapshot!.bytesTransferred / snapshot!.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
+        this.progress = (snapshot!.bytesTransferred / snapshot!.totalBytes) * 100;
+        console.log(`Upload is ${this.progress}% done`);
       },
       (error) => {
         console.error('Image upload failed:', error);
