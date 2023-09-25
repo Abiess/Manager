@@ -12,6 +12,9 @@ export class RegisterComponent implements OnInit {
   email : string = '';
   password : string = '';
   displayName : string = '';
+  lastName : string = '';
+  company : string = '';
+  phone : string = '';
   progress = 0;
 
   constructor(private auth : AuthService, private storage : AngularFireStorage) { }
@@ -35,10 +38,13 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.auth.register(this.email,this.password, this.displayName);
+    this.auth.register(this.email,this.password, this.displayName, this.lastName, this.company, this.phone);
     
     this.email = '';
     this.password = '';
+    this.lastName = '';
+    this.company = '';
+    this.phone = '';
 
   }
   onFileSelected(event: any) {
