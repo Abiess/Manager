@@ -6,6 +6,7 @@ import { GroupComponent } from './component/group/group.component';
 import { HomeComponent } from './component/home/home.component';
 import { LandingPageComponent } from './component/landing-page/landing-page.component';
 import { LoginComponent } from './component/login/login.component';
+import { DocsComponent } from './component/MyTasks/docs/docs.component';
 import { ProfilComponent } from './component/profil/profil.component';
 import { ProjectComponent } from './component/project/project.component';
 import { RegisterComponent } from './component/register/register.component';
@@ -27,6 +28,8 @@ const routes: Routes = [
 {path:'', component: LandingPageComponent},
 {path:'dashboard', component: DashboardComponent},
 {path:'test', component: TestComponent},
+{path:'docs', component: DocsComponent},
+
 
 ];
 

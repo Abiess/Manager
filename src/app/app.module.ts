@@ -15,13 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { initializeFirestore } from '@firebase/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './component/login/login.component';
@@ -32,7 +27,6 @@ import { CommentsComponent } from './component/comments/comments.component';
 import { CommentComponent } from './component/comments/comment/comment.component';
 import { CommentFormComponent } from './component/comments/comment-form/comment-form.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
@@ -61,6 +55,9 @@ import { LandingPageComponent } from './component/landing-page/landing-page.comp
 import { OverviewComponent } from './component/overview/overview.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { TestComponent } from './component/test/test.component';
+import { DocsComponent } from './component/MyTasks/docs/docs.component';
+import { DocsformComponent } from './component/MyTasks/docsform/docsform.component';
+import { UploadfileComponent } from './uploadfile/uploadfile.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -96,6 +93,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     OverviewComponent,
     DashboardComponent,
     TestComponent,
+    DocsComponent,
+    DocsformComponent,
+    UploadfileComponent,
     
 
   
