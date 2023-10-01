@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,9 @@ export class RegisterComponent implements OnInit {
   phone : string = '';
   progress = 0;
 
-  constructor(private auth : AuthService, private storage : AngularFireStorage) { }
+  imageprofil = "imageprofil";
+
+  constructor(private auth : AuthService) { }
 
   ngOnInit(): void {
   }
@@ -47,36 +49,4 @@ export class RegisterComponent implements OnInit {
     this.phone = '';
 
   }
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.uploadImage(file);
-    }
-  }
-  uploadImage(file: File) {
-    const filePath = `imageprofil/${file.name}`;
-    const storageRef = this.storage.ref(filePath);
-    const uploadTask = storageRef.put(file);
-  
-    uploadTask.snapshotChanges().subscribe(
-      (snapshot) => {
-        // Image upload progress
-        this.progress = (snapshot!.bytesTransferred / snapshot!.totalBytes) * 100;
-        console.log(`Upload is ${this.progress}% done`);
-      },
-      (error) => {
-        console.error('Image upload failed:', error);
-      },
-      () => {
-        // Image upload is complete
-        storageRef.getDownloadURL().subscribe((downloadURL) => {
-          console.log('Image upload successful. Download URL:', downloadURL);
-  
-          // You can now save the downloadURL to your database or use it in your app as needed.
-        });
-      }
-    );
-  }
-    
-
 }

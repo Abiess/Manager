@@ -17,6 +17,7 @@ export class DocsComponent {
   }
 
   addDoc(): void {
+    console.log("servus")
     const dialogRef = this.dialog.open(DocsformComponent, {
       maxWidth: '100vw',
       maxHeight: '100vh',

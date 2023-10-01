@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
@@ -8,11 +8,10 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 })
 export class UploadfileComponent {
   progress: number = 0;
+  @Input() uploadFolder: string | undefined;
 
  
   constructor(private storage : AngularFireStorage) {
-
-    
   }
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -21,7 +20,7 @@ export class UploadfileComponent {
     }
   }
   uploadImage(file: File) {
-    const filePath = `imageprofil/${file.name}`;
+    const filePath = `${this.uploadFolder}/${file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = storageRef.put(file);
   

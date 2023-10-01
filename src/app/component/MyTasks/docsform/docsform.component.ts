@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./docsform.component.css']
 })
 export class DocsformComponent {
+  imageprofil = "docs";
 
 }
