@@ -58,6 +58,10 @@ import { TestComponent } from './component/test/test.component';
 import { DocsComponent } from './component/MyTasks/docs/docs.component';
 import { DocsformComponent } from './component/MyTasks/docsform/docsform.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
+import { VerfallsdatumComponent } from './component/MyTasks/verfallsdatum/verfallsdatum.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -96,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DocsComponent,
     DocsformComponent,
     UploadfileComponent,
+    VerfallsdatumComponent,
     
 
   
@@ -137,6 +142,9 @@ export function HttpLoaderFactory(http: HttpClient) {
    ScrollingModule,
    MatTableModule,
    MatProgressSpinnerModule,
+   MatDatepickerModule,
+   MatFormFieldModule,
+   MatNativeDateModule
 
   ],
   providers: [

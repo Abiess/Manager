@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
@@ -9,6 +9,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class UploadfileComponent {
   progress: number = 0;
   @Input() uploadFolder: string | undefined;
+  @Output() fileUploaded = new EventEmitter<string>();
 
  
   constructor(private storage : AngularFireStorage) {
@@ -37,6 +38,7 @@ export class UploadfileComponent {
         // Image upload is complete
         storageRef.getDownloadURL().subscribe((downloadURL) => {
           console.log('Image upload successful. Download URL:', downloadURL);
+          this.fileUploaded.emit(downloadURL);
   
           // You can now save the downloadURL to your database or use it in your app as needed.
         });
