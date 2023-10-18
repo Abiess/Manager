@@ -62,6 +62,9 @@ import { VerfallsdatumComponent } from './component/MyTasks/verfallsdatum/verfal
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
+import { BottomSheetFormComponent } from './component/MyTasks/bottom-sheet-form/bottom-sheet-form.component';
+import {MatBottomSheetModule, MatBottomSheetRef, MatBottomSheet} from '@angular/material/bottom-sheet';
+import { ProductListComponent } from './shared/product-list/product-list.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -101,6 +104,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DocsformComponent,
     UploadfileComponent,
     VerfallsdatumComponent,
+    BottomSheetFormComponent,
+    ProductListComponent,
     
 
   
@@ -144,7 +149,8 @@ export function HttpLoaderFactory(http: HttpClient) {
    MatProgressSpinnerModule,
    MatDatepickerModule,
    MatFormFieldModule,
-   MatNativeDateModule
+   MatNativeDateModule,
+   MatBottomSheetModule,
 
   ],
   providers: [

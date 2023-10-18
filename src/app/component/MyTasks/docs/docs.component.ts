@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Doc } from 'src/app/model/doc';
 import { AuthService } from 'src/app/shared/auth.service';
 import { DocsService } from 'src/app/shared/docs.service';
-import { TaskService } from 'src/app/shared/task.service';
-
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-docs',
@@ -15,7 +14,8 @@ import { TaskService } from 'src/app/shared/task.service';
 export class DocsComponent {
   data: Doc[] = [];
  
-  constructor(private docsService : DocsService, private authService : AuthService) {}
+  constructor(private docsService : DocsService,
+     private authService : AuthService, private bottomSheet: MatBottomSheet) {}
 
   ngOnInit() {
     this.docsService.doc?.subscribe(docs => {
@@ -27,7 +27,10 @@ export class DocsComponent {
 
   docs: string | undefined;
   uploadedFileUrl: string | undefined;
-
+  
+  showBottomSheet() {
+    this.bottomSheet.open(BottomSheetOverviewExampleSheet);
+  }
   
     formData: Doc = {
       name: '',
@@ -81,3 +84,12 @@ export class DocsComponent {
   }
 }
 
+export class BottomSheetOverviewExampleSheet {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>) {}
+
+  openLink(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
+
+}

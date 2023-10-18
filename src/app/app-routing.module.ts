@@ -13,6 +13,7 @@ import { ProjectComponent } from './component/project/project.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SettingComponent } from './component/setting/setting.component';
 import { TestComponent } from './component/test/test.component';
+import { ProductListComponent } from './shared/product-list/product-list.component';
 import { TaskParentComponent } from './task-parent/task-parent.component';
 
 
@@ -31,6 +32,7 @@ const routes: Routes = [
 {path:'test', component: TestComponent},
 {path:'docs', component: DocsComponent},
 {path:'experationdate', component: VerfallsdatumComponent},
+{path:'einkaufen', component: ProductListComponent},
 
 
 ];

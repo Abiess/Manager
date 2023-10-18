@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   // register method
-  register(email: string, password: string, displayName: string, lastName: string, company: string, phone: string  ) {
+  register(email: string, password: string, displayName: string  ) {
     this.fireauth
       .createUserWithEmailAndPassword(email, password)
       .then(

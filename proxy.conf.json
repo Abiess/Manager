@@ -1,0 +1,7 @@
+{
+  "/organizations/*": {
+    "target": "https://products.izettle.com",
+    "secure": true,
+    "changeOrigin":true
+  }
+}

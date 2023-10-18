@@ -1,52 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
 
+// Custom validator function
+function passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  const password = control.get('password');
+  const confirmPassword = control.get('password');
+
+  if (password!.value !== confirmPassword!.value) {
+    return { 'passwordMismatch': true };
+  }
+
+  return null;
+}
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
+  imageProfile : string = ''
+  registrationForm: FormGroup;
 
-  email : string = '';
-  password : string = '';
-  displayName : string = '';
-  lastName : string = '';
-  company : string = '';
-  phone : string = '';
-  progress = 0;
-
-  imageprofil = "imageprofil";
-
-  constructor(private auth : AuthService) { }
-
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) {
+    this.registrationForm = this.formBuilder.group({
+      displayName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required, ],
+      confirmPassword: ['', Validators.required],
+    }, {
+      validators: passwordMatchValidator, // Apply custom validator
+    });
   }
 
   register() {
-
-    if(this.email == '') {
-      alert('Please enter email');
-      return;
+    if (this.registrationForm.valid) {
+      const registrationData = this.registrationForm.value;
+      this.auth.register(
+        registrationData.email,
+        registrationData.password,
+        registrationData.displayName,
+        
+      );
+      console.log("register" + JSON.stringify(registrationData))
+      this.registrationForm.reset();
     }
-
-    if(this.password == '') {
-      alert('Please enter password');
-      return;
-    }
-    if(this.displayName == '') {
-      alert('Please enter displayName');
-      return;
-    }
-
-    this.auth.register(this.email,this.password, this.displayName, this.lastName, this.company, this.phone);
-    
-    this.email = '';
-    this.password = '';
-    this.lastName = '';
-    this.company = '';
-    this.phone = '';
-
   }
 }
