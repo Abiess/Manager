@@ -1,8 +1,70 @@
-<div>
-    <h2>Product List</h2>
-    <ul>
-      <li *ngFor="let product of products">
-        {{ product.name }}
-      </li>
-    </ul>
-  </div>
+<div class="grid grid-row-3 gap-4">
+  <mat-tab-group class="col-span-3">
+    <!-- Tabs -->
+    <mat-tab *ngFor="let cat of categories" [label]="cat.name ? cat.name : 'Undefined'">
+      <ng-template mat-tab-label>
+        {{ cat.name ? cat.name : 'Undefined' }}
+      </ng-template>
+
+      <!-- Content -->
+      <div class="product-card">
+        <div class="w-80 bg-white shadow rounded" *ngFor="let product of getProductsForCategory(cat)">
+          <!-- Product Card -->
+          <div class="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center"
+            style="background-image: url('{{product.presentation?.imageUrl}}');">
+            <div class="flex justify-between">
+              <input type="checkbox" />
+              <button class="text-white hover:text-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+            <div>
+              <span
+                class="uppercase text-xs bg-green-50 p-0.5 border-green-500 border rounded
+                 text-green-700 font-medium select-none">
+                available
+              </span>
+            </div>
+          </div>
+          <div class="p-4 flex flex-col items-center">
+            <p class="text-gray-400 font-light text-xs text-center">{{cat.name}}</p>
+            <h1 class="text-gray-800 text-center mt-1">{{product.name}}</h1>
+            <ul>
+              <li *ngFor="let variant of product.variants">
+                <p class="text-center text-gray-800 mt-1">{{ variant.price?.amount }} €</p>
+              </li>
+            </ul>
+            <div class="inline-flex items-center mt-2">
+              <button
+                class="bg-white rounded-l border text-gray-600 hover-bg-gray-100 active-bg-gray-200 disabled-opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                </svg>
+              </button>
+              <div
+                class="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover-bg-gray-100 inline-flex items-center px-4 py-1 select-none">
+                2
+              </div>
+              <button
+                class="bg-white rounded-r border text-gray-600 hover-bg-gray-100 active-bg-gray-200 disabled-opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+
+
+

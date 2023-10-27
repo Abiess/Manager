@@ -1,8 +1,8 @@
 
 export interface Merchant {
   id?: string;
-  Name: string;
-  description?: string;
+  Name: string | null;
+  description?: string | null;
   creator? : string | undefined;
   createdAm? : Date;
   attachement? : string ;
@@ -14,69 +14,69 @@ export interface Merchant {
   
   export class Product {
     uuid?: string;
-    categories?: Category[];
+    categories?: Category[] | null;
     name?: string;
-    description?: string;
+    description?: string | null ;
     imageLookupKeys?: string[];
     presentation?: Presentation;
     variants?: ProductVariant[];
-    externalReference?: string;
-    etag?: string;
-    updated?: string;
-    updatedBy?: string;
-    created?: string;
-    unitName?: string;
-    vatPercentage?: string;
-    online?: OnlineInfo;
+    externalReference?: string | null;
+    etag?: string | null;
+    updated?: string | null;
+    updatedBy?: string | null;
+    created?: string | null;
+    unitName?: string | null;
+    vatPercentage?: string | null;
+    online?: OnlineInfo | null;
     variantOptionDefinitions: any; // You can define a specific type if available
-    taxCode?: string;
-    category?: Category;
+    taxCode?: string | null;
+    category?: Category | null;
     metadata: any; // You can define a specific type if available
     taxRates?: any[]; // You can define a specific type if available
     taxExempt: any; // You can define a specific type if available
   }
   
   export class Category {
-    uuid?: string;
-    name?: string;
+    uuid?: string | undefined;
+    name?: string | null;
   }
   
   export class Presentation {
     imageUrl?: string;
-    backgroundColor?: string;
-    textColor?: string;
+    backgroundColor?: string | null;
+    textColor?: string | null;
   }
   
   export class ProductVariant {
     uuid?: string;
-    name?: string;
-    description?: string;
-    sku?: string;
-    barcode?: string;
-    price?: Price;
-    costPrice?: Price;
-    vatPercentage?: string;
+    name?: string | null;
+    description?: string | null;
+    sku?: string | null;
+    barcode?: string | null;
+    price?: Price | null;
+    costPrice?: Price | null;
+    vatPercentage?: string | null;
     options: any; // You can define a specific type if available
     presentation: any; // You can define a specific type if available
   }
   
   export class Price {
     amount?: number;
-    currencyId?: string;
+    currencyId?: string | null;
   }
   
   export class OnlineInfo {
-    status?: string;
-    title?: string;
-    description?: string;
-    shipping?: string;
-    presentation: any; // You can define a specific type if available
-    seo?: SeoInfo;
+    status?: string | null;
+    title?: string | null;
+    description?: string | null;
+    shipping?: string | null;
+    presentation: any | null; // You can define a specific type if available
+    seo?: SeoInfo | null;
   }
   
   export class SeoInfo {
-    title?: string;
-    metaDescription?: string;
-    slug?: string;
+    title?: string | null;
+    metaDescription?: string | null;
+    slug?: string | null;
   }
   

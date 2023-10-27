@@ -63,9 +63,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import { BottomSheetFormComponent } from './component/MyTasks/bottom-sheet-form/bottom-sheet-form.component';
-import {MatBottomSheetModule, MatBottomSheetRef, MatBottomSheet} from '@angular/material/bottom-sheet';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { ProductListComponent } from './shared/product-list/product-list.component';
-
+import {MatTabsModule} from '@angular/material/tabs'
+import { CommonModule } from '@angular/common';
+import { ResponsiveHelperComponent } from './shared/responsive-helper/responsive-helper.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -106,9 +108,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     VerfallsdatumComponent,
     BottomSheetFormComponent,
     ProductListComponent,
-    
+    ResponsiveHelperComponent
 
-  
   ],
   imports: [
     HttpClientModule,
@@ -151,6 +152,8 @@ export function HttpLoaderFactory(http: HttpClient) {
    MatFormFieldModule,
    MatNativeDateModule,
    MatBottomSheetModule,
+   MatTabsModule,
+   CommonModule
 
   ],
   providers: [
