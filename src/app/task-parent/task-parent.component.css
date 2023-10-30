@@ -11,13 +11,8 @@ mat-toolbar {
     margin: auto;
   }
   
-  .container-wrapper {
-    display: flex;
-    justify-content: space-around;
-  }
-  
   .container {
-    width: 400px;
+    width: 300px;
     margin: 0 25px 25px 0;
   }
   

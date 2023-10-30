@@ -19,7 +19,7 @@ bg-[rgb(36,39,47)] hover:bg-[#24292F]/90 focus:ring-4
     <app-spinner></app-spinner>
   </div>
   <ng-template #display>
-    <div class="container-wrapper">
+    <div class="hidden md:flex">
       <div class="container">
         <h2>Tasks</h2>
   
@@ -62,6 +62,18 @@ bg-[rgb(36,39,47)] hover:bg-[#24292F]/90 focus:ring-4
           <app-task (edit)="editTask('done', $event)" *ngFor="let task of done | async" cdkDrag [task]="task"></app-task>
         </mat-card>
       </div>
+    </div>
+    <div class="md:hidden">
+      <mat-tab-group>
+        <mat-tab label="Todo"> <p class="empty-label" *ngIf="(todo | async)?.length === 0">Empty list</p>
+          <app-task (edit)="editTask('todo', $event)" *ngFor="let task of todo | async" cdkDrag [task]="task"></app-task></mat-tab>
+     
+          <mat-tab label="In progress">  <p class="empty-label" *ngIf="(inProgress | async)?.length === 0">Empty list</p>
+          <app-task (edit)="editTask('inProgress', $event)" *ngFor="let task of inProgress | async" cdkDrag [task]="task"></app-task> </mat-tab>
+     
+          <mat-tab label="Done">  <p class="empty-label" *ngIf="(done | async)?.length === 0">Empty list</p>
+          <app-task (edit)="editTask('done', $event)" *ngFor="let task of done | async" cdkDrag [task]="task"></app-task> </mat-tab>
+      </mat-tab-group>
     </div>
 
   </ng-template>
