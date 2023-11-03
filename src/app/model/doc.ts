@@ -1,6 +1,6 @@
 
 export interface Doc {
-  id?: string;
+  id?: string |undefined;
   name: string;
   description: string;
   creator : string | undefined;

@@ -68,6 +68,7 @@ import { ProductListComponent } from './shared/product-list/product-list.compone
 import {MatTabsModule} from '@angular/material/tabs'
 import { CommonModule } from '@angular/common';
 import { ResponsiveHelperComponent } from './shared/responsive-helper/responsive-helper.component';
+import { DocDialogComponent } from './component/MyTasks/doc-dialog/doc-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -108,7 +109,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     VerfallsdatumComponent,
     BottomSheetFormComponent,
     ProductListComponent,
-    ResponsiveHelperComponent
+    ResponsiveHelperComponent,
+    DocDialogComponent
 
   ],
   imports: [
