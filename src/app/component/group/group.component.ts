@@ -6,7 +6,6 @@ import { GroupDialogComponent, GroupDialogResult } from '../group-dialog/group-d
 import { MatTableDataSource } from '@angular/material/table';
 import { Group } from '../../model/Group';
 import { TaskService } from 'src/app/shared/task.service';
-import { DataSource } from '@angular/cdk/collections';
 import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
