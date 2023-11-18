@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { DocDialogComponent } from '../doc-dialog/doc-dialog.component';
 import { GroupDialogResult } from '../../group-dialog/group-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { doc } from 'firebase/firestore';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-docs',
@@ -18,7 +20,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class DocsComponent {
 
   data: Doc[] = [];
-  
+  filteredData: Doc[] = [];
+  searchText: string = '';
  
   constructor(private docsService : DocsService, private router: Router,private dialog : MatDialog,
      private authService : AuthService) {}
@@ -26,6 +29,7 @@ export class DocsComponent {
   ngOnInit() {
     this.docsService.doc?.subscribe(docs => {
         this.data = docs;
+        this.filteredData = this.data;
         
       });
     
@@ -67,9 +71,17 @@ export class DocsComponent {
           });
         }
       }
+      openLink(url: string): void {
+        window.open(url, '_blank');
+      }
       
-  
-  
+
+      filterData() {
+        this.filteredData = this.data.filter(item =>
+          item.name.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+      }
+
   handleFileUpload(fileUrl: string) {
     // Handle the uploaded file URL (e.g., store it or use it as needed)
     this.uploadedFileUrl = fileUrl;
@@ -113,6 +125,7 @@ export class DocsComponent {
     
   }
   addDoc() {
+    console.log("hier bin ich ")
     this.router.navigate(['/addDoc']); 
 }
 

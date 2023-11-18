@@ -1,0 +1,13 @@
+<!-- add-category-dialog.component.html -->
+<h2 mat-dialog-title>Add Category</h2>
+<div mat-dialog-content>
+  <p>
+    <mat-form-field>
+      <input matInput placeholder="Category Name" [(ngModel)]="categoryName" />
+    </mat-form-field>
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="categoryName" cdkFocusInitial>OK</button>
+</div>

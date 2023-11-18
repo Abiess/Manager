@@ -12,7 +12,7 @@ export class DocsService {
   doc! : Observable<Doc[]>
 
   constructor(private store: AngularFirestore, private authService : AuthService ) {
-    console.log("icbh bin im DOCS")
+    
     this.newMethod();
   }
 
@@ -22,7 +22,7 @@ export class DocsService {
         this.UserUid = userInfo.uid;
         ;
         this.doc = this.getFirestoreInstance().collection('doc', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Doc[]>;
-
+        
 
       }
     });

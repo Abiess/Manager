@@ -69,6 +69,7 @@ import {MatTabsModule} from '@angular/material/tabs'
 import { CommonModule } from '@angular/common';
 import { ResponsiveHelperComponent } from './shared/responsive-helper/responsive-helper.component';
 import { DocDialogComponent } from './component/MyTasks/doc-dialog/doc-dialog.component';
+import { AddCategoryDialogComponentComponent } from './component/MyTasks/doc-dialog/add-category-dialog-component/add-category-dialog-component.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -110,7 +111,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BottomSheetFormComponent,
     ProductListComponent,
     ResponsiveHelperComponent,
-    DocDialogComponent
+    DocDialogComponent,
+    AddCategoryDialogComponentComponent
 
   ],
   imports: [
