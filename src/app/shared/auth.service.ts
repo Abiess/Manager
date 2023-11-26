@@ -111,6 +111,7 @@ export class AuthService {
       alert(err.message);
     })
   }
+
   getLoggedInUser(): Promise<UserInfo | null> {
     return new Promise<UserInfo | null>((resolve, reject) => {
       this.fireauth.onAuthStateChanged((user) => {
@@ -119,7 +120,7 @@ export class AuthService {
         } else {
           resolve(null);
         }
-        console.log("auth service getloggedIn User " + JSON.stringify(user))
+        
       }, (error) => {
         reject(error);
       });

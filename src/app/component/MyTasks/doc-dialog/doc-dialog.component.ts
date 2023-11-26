@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { UserInfo } from '@angular/fire/auth';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Doc } from 'src/app/model/doc';
 import { DocCategory } from 'src/app/model/DocCategory';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -18,21 +18,36 @@ export class DocDialogComponent {
   message : string = ''
   categories : DocCategory[] = []
   userInfo : UserInfo | undefined;
+  docs: string | undefined;
+  uploadedFileUrl: string | undefined;
 
   constructor(private docsService : DocsService, 
     private catService : CategoryService,
      private authService : AuthService,
+     @Inject(MAT_DIALOG_DATA) public mydata: DocDialogData,
+     public dialogRef: MatDialogRef<DocDialogComponent>, 
      private dialog : MatDialog) {}
 
+     private backupDoc: Partial<Doc> = { ...this.mydata.doc};
+  
+ 
+    cancel(): void {
+      this.mydata.doc.attachements = this.backupDoc.attachements;
+      this.mydata.doc.description = this.backupDoc.description;
+      this.mydata.doc.name = this.backupDoc.name;
+      this.mydata.doc.paid = this.backupDoc.paid;
+      this.mydata.doc.createdAm = this.backupDoc.createdAm;
+      this.mydata.doc.docsArt = this.backupDoc.docsArt;
+      this.mydata.doc.creator = this.backupDoc.creator;
+      this.dialogRef.close(this.mydata);
+    }
   ngOnInit() {
     this.docsService.doc?.subscribe(docs => {
-        this.data = docs;
-        
+        this.data = docs; 
       });
-     
       this.catService.getCategories()?.subscribe(sd => {
-        
         this.categories = sd;
+        
       });
       this.authService.getLoggedInUser().then(uInfo => {
         if (uInfo?.uid) {
@@ -40,17 +55,14 @@ export class DocDialogComponent {
         }
       });
     
-    
-     
   }
   openAddCategoryDialog(): void {
-    const dialogRef = this.dialog.open(AddCategoryDialogComponentComponent, {
+    const dialogRefCategorie = this.dialog.open(AddCategoryDialogComponentComponent, {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRefCategorie.afterClosed().subscribe((result) => {
       if (result) {
-        console.log("result is " + this.userInfo?.uid)
         const newCategory: DocCategory = {
           name: result,
           createdAm: new Date(),
@@ -67,63 +79,25 @@ export class DocDialogComponent {
       }
     });
   }
-  docs: string | undefined;
-  uploadedFileUrl: string | undefined;
-  
-  
-    formData: Doc = {
-      name: '',
-      description: '',
-      creator: undefined,
-      createdAm: new Date(),
-      docsArt: '',
-      paid : false,
-      attachement : '',
-      id:''
-    };
-      // Add a method to handle form submission
-      onSubmit() {
-        console.log("onsubmit ")
-        // Your validation logic and data submission code will go here
-        if (this.isValid()) {
-          this.formData.attachement = this.uploadedFileUrl!;
-      
-              this.formData.creator = this.userInfo?.uid;
-              // Use the AngularFirestore instance from docsService to add the document
-              this.docsService.getFirestoreInstance().collection('doc').add(this.formData)
-                .then(() => {
-                  this.message = 'Document added successfully.';
-                  // Optionally, reset the form or perform other actions after successful submission
-                })
-                .catch(error => {
-                  this.message = 'Error adding document: ' + error;
-                });
-            
-          
-        }
-      }
-      
-  
-  
-  handleFileUpload(fileUrl: string) {
-    // Handle the uploaded file URL (e.g., store it or use it as needed)
-    this.uploadedFileUrl = fileUrl;
-  }
 
-  // Add a method to validate the form data
-  isValid(): boolean {
-    // Implement your validation logic here
-    // Return true if the data is valid; otherwise, return false
-    if (!this.formData.name || !this.formData.description) {
-      return false;
+
+  handleFileUpload(fileUrl: string) {
+    if (!this.mydata.doc.attachements) {
+      this.mydata.doc.attachements = []; // Initialize as an empty array if undefined
     }
-    return true;
+    this.mydata.doc.attachements?.push({name: fileUrl, creator: this.userInfo?.uid!})
+   
+
   }
- 
+}
+  export interface DocDialogData {
+    doc: Partial<Doc>;
+    enableDelete: boolean;
+    isCreateMode : boolean;
     
   }
+  
   export interface DocDialogResult {
     doc: Doc;
     delete?: boolean;
-
-}
+  }

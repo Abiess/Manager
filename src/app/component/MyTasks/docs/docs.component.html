@@ -32,6 +32,10 @@
                               <th scope="col"    class="px-6 py-3">
                                   Status
                               </th>
+
+                              <th scope="col" class="px-6 py-3">
+                                Category
+                            </th>
                               
                               <th scope="col" class="px-6 py-3">
                                   Action
@@ -47,12 +51,10 @@
                                       <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
                                       </svg>
-                                      <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                        <!-- app.component.html -->
-                                        <a (click)="openLink(item.attachement)" class="truncate font-medium underline"  style="cursor: pointer;">{{ item.name }}</a>
+                                      <div class="ml-4 flex min-w-0 flex-1 gap-2" *ngFor="let d of item.attachements">
 
-                                        <!-- <a class="truncate font-medium underline" [href]=item.attachement target="_blank">{{ item.name }}</a> -->
-                                        
+                                        <a (click)="openLink(d.name)" class="truncate font-medium underline"  style="cursor: pointer;">{{ item.name }}</a>
+
                                       
                                       </div>
                                     </div>
@@ -72,19 +74,32 @@
                                         {{ ' not paid' }}
                                       </div>
                                   </div>
-                                  
-                              </td>
-                              <td class="px-6 py-4">
-                                <button class="material-icons" [matMenuTriggerFor]="menu">
-                                  more_vert
-                                </button>
-                                    <mat-menu #menu="matMenu" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                      <button mat-menu-item (click)="editDoc()">Edit</button>
-                                      <button mat-menu-item (click)="downloadDoc()">Download</button>
-                                      <button mat-menu-item (click)="shareDoc()">Share</button>
-                                    </mat-menu>
+                                  <td class="px-6 py-4">
+                                    <div>
+                                      {{item.docsArt}}
+                                     </div>
+                                  </td>
 
-                              </td>
+                              <td class="px-6 py-4">
+                                    <div class="flex items-center justify-items-start">
+                                        <button class="w-6 mr-2 transform hover:scale-110">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class=" hover:text-purple-500" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </button>
+                                        <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" (click)="editDoc(item)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class=" hover:text-red-500" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                        </button>
+                                        <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" (click)="deleteDoc(item)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class=" hover:text-blue-500" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
                           </tr>
                       </tbody>
                   </table>

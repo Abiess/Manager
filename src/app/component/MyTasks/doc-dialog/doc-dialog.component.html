@@ -1,23 +1,28 @@
-<div class="  relative bg-white rounded-lg shadow dark:bg-gray-800">
+<div class="overflow-y-scroll">
+    <div class="bg-gray-900 px-6 py-4 text-center 
+    text-2xl font-bold uppercase
+     text-white"> {{ mydata.isCreateMode ? 'Create Doc' : 'Update Doc' }}</div>
+    <div class="px-6 py-4">
+
     <div class="grid gap-4  sm:grid-cols-2">
            <div>
                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                <input type="text" name="name" 
-               [(ngModel)]="formData.name"
+               [(ngModel)]="mydata.doc.name"
                 id="name" 
                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type doc name" required="">
            </div>
           
            <div >
                <label class="relative inline-flex items-center  cursor-pointer mt-10">
-                   <input type="checkbox" value="" class="sr-only peer" checked [(ngModel)]="formData.paid">
+                   <input type="checkbox" value="" class="sr-only peer" checked [(ngModel)]="mydata.doc.paid">
                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">paid</span>
                  </label>
            </div>
            <div>
                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-               <select id="category" [(ngModel)]="formData.docsArt" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+               <select id="category" [(ngModel)]="mydata.doc.docsArt" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                    <option selected="">Select category</option>
                    <!-- <option value="Einkaufen-rechnung">Einkaufen/Rechnung</option>
                    <option value="Reparatur-rechnung">Reparatur/Rechnung</option>
@@ -37,32 +42,61 @@
     
            <div class="sm:col-span-1">
                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-               <textarea id="description" [(ngModel)]="formData.description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write doc description here"></textarea>                    
+               <textarea id="description" [(ngModel)]="mydata.doc.description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write doc description here"></textarea>                    
            </div>
          
            <div class="sm:col-span-1 mb-3">
            <app-uploadfile [uploadFolder]="docs" (fileUploaded)="handleFileUpload($event)"></app-uploadfile>
            </div>
     
-           <div class="col-span-2 justify-stretch"> 
-               <button type="submit" (click)="onSubmit()"
-                class="bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600
-               dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 
-               rounded outline-none focus:outline-none mr-4 mb-4 ease-linear transition-all duration-150">Add doc
-                   <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" 
-                   xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                     clip-rule="evenodd"></path>
-                   </svg>
-                   
-               </button>
-           </div>
-           <div>
-            <span>{{message}}</span>
-           </div>
-         
-       </div>
+           <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0" *ngIf="!mydata.isCreateMode">
      
+            <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                
+                <li *ngFor="let document of mydata.doc.attachements"
+                 class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                  <div class="flex w-0 flex-1 items-center">
+                    <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
+                    </svg>
+                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                      <span class="truncate font-medium">{{document.name}}</span>
+                      <span class="flex-shrink-0 text-gray-400">size</span>
+                    </div>
+                  </div>
+                  <div class="ml-4 flex-shrink-0">
+                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                  </div>
+                  <div class="ml-4 flex-shrink-0">
+                    <a  class="font-medium text-red-600 hover:text-red-500">Delete</a>
+                  </div>
+                </li>
+               
+              </ul>
+            </dd>
+          </div>
+
+      
+       </div>
     </div>
-    
+    <div class="mb-4 flex items-center justify-center">
+        <button class="focus:shadow-outline 
+        rounded bg-gray-900 px-4 py-2 text-white 
+        hover:bg-gray-800 focus:outline-none" 
+        [mat-dialog-close]="{ doc: mydata.doc}">{{ mydata.isCreateMode ? 'Create Doc' : 'Update Doc' }}
+       
+      </button>
+      <button class="focus:shadow-outline ml-6
+      rounded bg-gray-900 px-6 py-2 text-white 
+      hover:bg-gray-800 focus:outline-none" 
+      (click)="cancel()">
+      Cancel
+    </button>
+    <button *ngIf="mydata.enableDelete" mat-fab color="primary"aria-label="Delete"
+    [mat-dialog-close]="{ doc: mydata.enableDelete }">
+    <mat-icon color="warn">delete</mat-icon>
+  </button>
+      </div>
+    </div>
     

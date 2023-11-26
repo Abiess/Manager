@@ -6,8 +6,13 @@ export interface Doc {
   creator : string | undefined;
   createdAm : Date;
   docsArt : string;
-  attachement : string ;
+  attachements : Attachment[]; 
   paid : boolean;
     
+  }
+  export interface Attachment{
+
+    name : string, 
+    creator : string ,
   }
   
