@@ -1,31 +1,34 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable,} from 'rxjs';
 import { AuthService } from './auth.service';
 import { DocCategory } from 'src/app/model/DocCategory';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService{
-  UserUid : string = '';
+export class CategoryService implements OnInit{
+  //currentUser!: firebase.default.User | null;
 
   constructor(private store: AngularFirestore,
      private authService : AuthService) { 
-      this.newMethod();
+     
   }
-
-  private newMethod() {
-    this.authService.getLoggedInUser().then(userInfo => {
-      if (userInfo?.uid !== undefined) {
-        this.UserUid = userInfo?.uid;
-      }
+  ngOnInit(): void {
+    this.authService.getCurrentUser().subscribe(user => {
+      //this.currentUser = user;
     });
   }
+
+ 
    
-  getCategories() : Observable<DocCategory[]>{
+  getCategories(currentUser : any) : Observable<DocCategory[]>{
+    console.log("i am here " + JSON.stringify(currentUser.uid))
+    
    return this.getFirestoreInstance().
-    collection('DocCategory', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as 
+    collection('DocCategory', ref => ref.where('creator', '==', currentUser?.uid)).valueChanges({ idField: 'id' }) as 
     Observable<DocCategory[]>;
     
   }

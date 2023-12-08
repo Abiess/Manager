@@ -48,12 +48,12 @@
         inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full
          dark:bg-gray-600" [attr.aria-expanded]="isProfilPhotoOpen ? 'true' : 'false'" aria-haspopup="true">
        
-         <div *ngIf="userInfo">
+         <div *ngIf="currentUser">
           <span class="font-medium text-gray-600 dark:text-gray-300">
-            {{userInfo.displayName?.substring(0, 1)}}
+            {{currentUser.displayName?.substring(0, 1)}}
           </span>
         </div>
-        <div *ngIf="!userInfo">
+        <div *ngIf="!currentUser">
           <!-- Handle case where userInfo is null -->
           <span class="font-medium text-gray-600 dark:text-gray-300">
             XX
@@ -62,15 +62,15 @@
           <!-- <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" /> -->
         </button>
       </div>
-      <div *ngIf="isProfilPhotoOpen && userInfo" class="absolute right-0 z-10 mt-2 w-48 origin-top-right 
+      <div *ngIf="isProfilPhotoOpen && currentUser" class="absolute right-0 z-10 mt-2 w-48 origin-top-right 
       rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" 
       role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
         <!-- Active: "bg-gray-100", Not Active: "" -->
         <div *ngIf="isProfilPhotoOpen"  id="userDropdown" class="z-10 
         bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
          <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-           <div>{{userInfo.displayName}}</div>
-           <div class="font-medium truncate">{{userInfo.email}}</div>
+           <div>{{currentUser!.displayName}}</div>
+           <div class="font-medium truncate">{{currentUser.email}}</div>
          </div>
          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"  aria-labelledby="avatarButton">
            <li>
@@ -85,15 +85,15 @@
          </ul>
          <div class="py-1">
            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
-            dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="isLoggedIn">Sign out</a>
-           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!isLoggedIn" mat-menu-item routerLink="/login">Sign in</a>
+            dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="currentUser">Sign out</a>
+           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!currentUser" mat-menu-item routerLink="/login">Sign in</a>
          </div>
         
      </div>
       </div>
 
       <!--if userinfo not available-->
-      <div *ngIf="isProfilPhotoOpen && !userInfo" class="absolute right-0 z-10 mt-2 w-48 origin-top-right 
+      <div *ngIf="isProfilPhotoOpen && !currentUser" class="absolute right-0 z-10 mt-2 w-48 origin-top-right 
       rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" 
       role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
         <!-- Active: "bg-gray-100", Not Active: "" -->
@@ -106,8 +106,8 @@
      
          <div class="py-1">
            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
-            dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="isLoggedIn">Sign out</a>
-           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!isLoggedIn" mat-menu-item routerLink="/login">Sign in</a>
+            dark:text-gray-200 dark:hover:text-white" routerLink="/home" *ngIf="currentUser">Sign out</a>
+           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" *ngIf="!currentUser" mat-menu-item routerLink="/login">Sign in</a>
          </div>
         
      </div>

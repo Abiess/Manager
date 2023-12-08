@@ -5,6 +5,8 @@ import { Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 import { TaskService } from '../shared/task.service';
 import { AuthService } from '../shared/auth.service';
+import { UserInfo } from 'firebase/auth';
+
 
 
 
@@ -20,12 +22,12 @@ export class TaskParentComponent implements OnInit{
   todo = this.taskService.todo;
   inProgress = this.taskService.inProgress;
   done = this.taskService.done;
-
+  userDetails!: UserInfo | null;
   
-  constructor(private dialog: MatDialog, private taskService : TaskService, private userService : AuthService) {
-    this.taskService.todo?.subscribe((todo)=> {
-        console.log("hier bin ich users " + JSON.stringify(todo));
-    });
+  constructor(private dialog: MatDialog, 
+    private taskService : TaskService,
+    private authService : AuthService) {
+   
   }
   ngOnInit(): void {    
    this.todo?.subscribe({
@@ -52,8 +54,15 @@ export class TaskParentComponent implements OnInit{
       this.isLoading = false; // Set loading flag to false in case of an error
     }
   });
-  console.log("task is Loading is " + this.isLoading);
-  }
+
+  this.authService.getCurrentUser().subscribe(user => {
+    this.userDetails = user;
+  
+  });
+}
+
+
+  
   
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
@@ -67,16 +76,16 @@ export class TaskParentComponent implements OnInit{
       },
     });
     dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
+      console.log("userdetails in task parent on add new task " + JSON.stringify(this.userDetails));
         if (!result) {return;}
-        this.userService.getLoggedInUser().then(userInfo => {
-           result.task.creator = userInfo?.uid;
-           result.task.createdAm = new Date();
-           this.taskService.store1.collection('todo').add(result.task);
+          if (this.userDetails){
+            result.task.creator = this.userDetails.uid ;
+            result.task.createdAm = new Date();
+            this.taskService.store1.collection('todo').add(result.task);
+          }
+          
         })
-        .catch(error => {
-          console.log('Error retrieving logged-in user:', error);
-        });
-      });
+       
   }
 
   editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {

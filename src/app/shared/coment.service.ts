@@ -7,11 +7,6 @@ import { UUID } from 'angular2-uuid';
 import { uuidv4 } from '@firebase/util';
 import { JsonPipe } from '@angular/common';
 
-
-
-
-
-
 @Injectable({
   providedIn: 'root'
 })

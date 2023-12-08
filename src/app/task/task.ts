@@ -6,4 +6,5 @@ export interface Task {
     creator : string | undefined;
     createdAm : Date;
     frequency : string; 
+    assignedTo: string;
   }

@@ -14,29 +14,30 @@ import { ProjectComponent } from './component/project/project.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SettingComponent } from './component/setting/setting.component';
 import { TestComponent } from './component/test/test.component';
+import { AuthGuardService } from './shared/auth-guard.service';
 import { ProductListComponent } from './shared/product-list/product-list.component';
 import { ResponsiveHelperComponent } from './shared/responsive-helper/responsive-helper.component';
 import { TaskParentComponent } from './task-parent/task-parent.component';
 
 
 const routes: Routes = [
-{path: 'login', component: LoginComponent},
+{path: 'login', component: LoginComponent, },
 {path: 'register', component: RegisterComponent},
-{path: 'task-parent', component: TaskParentComponent},
+{path: 'task-parent', component: TaskParentComponent, canActivate: [AuthGuardService] },
 {path: 'forgot-password', component: ForgotPasswordComponent},
-{path: 'profil', component: ProfilComponent},
-{path: 'setting', component: SettingComponent},
-{path: 'home', component: HomeComponent},
-{path:'groups', component: GroupComponent},
-{path:'projects', component: ProjectComponent},
-{path:'', component: LandingPageComponent},
-{path:'dashboard', component: DashboardComponent},
-{path:'test', component: TestComponent},
-{path:'docs', component: DocsComponent},
-{path:'experationdate', component: VerfallsdatumComponent},
-{path:'einkaufen', component: ProductListComponent},
+{path: 'profil', component: ProfilComponent, canActivate: [AuthGuardService] },
+{path: 'setting', component: SettingComponent, canActivate: [AuthGuardService] },
+{path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+{path:'groups', component: GroupComponent, canActivate: [AuthGuardService] },
+{path:'projects', component: ProjectComponent, canActivate: [AuthGuardService] },
+{path:'', component: LandingPageComponent, canActivate: [AuthGuardService]},
+{path:'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+{path:'test', component: TestComponent, canActivate: [AuthGuardService] },
+{path:'docs', component: DocsComponent, canActivate: [AuthGuardService] },
+{path:'experationdate', component: VerfallsdatumComponent, canActivate: [AuthGuardService] },
+{path:'einkaufen', component: ProductListComponent, canActivate: [AuthGuardService] },
 {path:'test1', component: ResponsiveHelperComponent},
-{path:'addDoc', component: DocDialogComponent},
+{path:'addDoc', component: DocDialogComponent, canActivate: [AuthGuardService] },
 
 
 ];

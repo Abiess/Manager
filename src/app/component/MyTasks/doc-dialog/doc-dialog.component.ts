@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { UserInfo } from '@angular/fire/auth';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { Doc } from 'src/app/model/doc';
 import { DocCategory } from 'src/app/model/DocCategory';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -13,24 +14,23 @@ import { AddCategoryDialogComponentComponent } from './add-category-dialog-compo
   templateUrl: './doc-dialog.component.html',
   styleUrls: ['./doc-dialog.component.css']
 })
-export class DocDialogComponent {
+export class DocDialogComponent implements OnInit {
   data: Doc[] = []
   message : string = ''
   categories : DocCategory[] = []
-  userInfo : UserInfo | undefined;
   docs: string | undefined;
   uploadedFileUrl: string | undefined;
+  currentUser!: firebase.default.User | null;
 
   constructor(private docsService : DocsService, 
     private catService : CategoryService,
      private authService : AuthService,
+     private store : AngularFirestore,
      @Inject(MAT_DIALOG_DATA) public mydata: DocDialogData,
      public dialogRef: MatDialogRef<DocDialogComponent>, 
      private dialog : MatDialog) {}
 
      private backupDoc: Partial<Doc> = { ...this.mydata.doc};
-  
- 
     cancel(): void {
       this.mydata.doc.attachements = this.backupDoc.attachements;
       this.mydata.doc.description = this.backupDoc.description;
@@ -42,18 +42,19 @@ export class DocDialogComponent {
       this.dialogRef.close(this.mydata);
     }
   ngOnInit() {
-    this.docsService.doc?.subscribe(docs => {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user;
+      this.catService.getCategories(this.currentUser)?.subscribe(sd => {
+        this.getFirestoreInstance().
+    collection('DocCategory', ref => ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as 
+    Observable<DocCategory[]>;
+        this.categories = sd;
+      });
+      this.docsService.doc?.subscribe(docs => {
         this.data = docs; 
       });
-      this.catService.getCategories()?.subscribe(sd => {
-        this.categories = sd;
-        
-      });
-      this.authService.getLoggedInUser().then(uInfo => {
-        if (uInfo?.uid) {
-          this.userInfo = uInfo;
-        }
-      });
+    
+    })
     
   }
   openAddCategoryDialog(): void {
@@ -66,28 +67,33 @@ export class DocDialogComponent {
         const newCategory: DocCategory = {
           name: result,
           createdAm: new Date(),
-          creator: this.userInfo?.uid
-         
+          creator: this.currentUser?.uid
         };
        
         this.catService.addCategory(newCategory).then(() => {
-          this.catService.getCategories().subscribe((ca) => {
-            this.categories = ca;
-           
-          });
+          return this.getFirestoreInstance().
+          collection('DocCategory', ref => ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as 
+          Observable<DocCategory[]>;
       });
       }
     });
   }
 
+  addCategory(category: DocCategory) {
+    // Implement adding a new category to Firebase
+    console.log('add category '+ this.currentUser?.uid)
+      return this.getFirestoreInstance().collection('DocCategory').add(category )
+  }
+  // Add a public method to access the store
+  getFirestoreInstance(): AngularFirestore {
+    return this.store;
+  }
 
   handleFileUpload(fileUrl: string) {
     if (!this.mydata.doc.attachements) {
-      this.mydata.doc.attachements = []; // Initialize as an empty array if undefined
+      this.mydata.doc.attachements = []; // 
     }
-    this.mydata.doc.attachements?.push({name: fileUrl, creator: this.userInfo?.uid!})
-   
-
+    this.mydata.doc.attachements?.push({name: fileUrl, creator: this.currentUser?.uid!})
   }
 }
   export interface DocDialogData {

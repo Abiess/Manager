@@ -1,31 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { Doc } from '../model/doc';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DocsService {
-  UserUid : string = '';
-  doc! : Observable<Doc[]>
+export class DocsService implements OnInit {
+  doc! : Observable<Doc[]>;
+  currentUser!: firebase.default.User | null;
 
-  constructor(private store: AngularFirestore, private authService : AuthService ) {
+  constructor(private store: AngularFirestore, 
+    private authService : AuthService ) {
     
-    this.newMethod();
   }
+  ngOnInit(): void {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user;
 
-  private newMethod() {
-    this.authService.getLoggedInUser().then(userInfo => {
-      if (userInfo?.uid !== undefined) {
-        this.UserUid = userInfo.uid;
-        ;
-        this.doc = this.getFirestoreInstance().collection('doc', ref => ref.where('creator', '==', this.UserUid)).valueChanges({ idField: 'id' }) as Observable<Doc[]>;
-        
-
-      }
-    });
+    })
   }
 
   // Add a public method to access the store

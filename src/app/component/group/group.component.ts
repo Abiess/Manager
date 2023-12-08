@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Group } from '../../model/Group';
 import { TaskService } from 'src/app/shared/task.service';
 import { AuthService } from 'src/app/shared/auth.service';
+import { AuthGuardService } from 'src/app/shared/auth-guard.service';
 
 @Component({
   selector: 'app-group',
@@ -33,7 +34,7 @@ export class GroupComponent implements OnInit {
   columns: string[] = [ 'Name', 'created by', 'Members', 'Status','Action'];
   
 
-  constructor(private dialog : MatDialog, private taskService : TaskService, private userService : AuthService) {  }
+  constructor(private dialog : MatDialog, private taskService : TaskService, private authGuard : AuthGuardService) {  }
   ngOnInit() {
   this.taskService.group?.subscribe(groups => {
       this.data = groups;
@@ -55,14 +56,12 @@ newGroup(): void {
   });
   dialogRef.afterClosed().subscribe((result: GroupDialogResult) => {
       if (!result) {return;}
-      this.userService.getLoggedInUser().then(userInfo => {
-         result.group.creator = userInfo?.uid;
+      
+         result.group.creator = this.authGuard.userDetails.uid;
          result.group.createdAm = new Date();
          this.taskService.store1.collection('group').add(result.group);
-      })
-      .catch(error => {
-        console.log('Error retrieving logged-in user:', error);
-      });
+      
+     
     });
 }
   applyFilter(event: Event) {

@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { user } from '@angular/fire/auth';
-import { User, UserInfo } from 'firebase/auth';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -8,16 +6,14 @@ import { AuthService } from 'src/app/shared/auth.service';
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.css']
 }) 
-export class ProfilComponent {
-  
-  loggedInUser!: UserInfo | null ;
-
-  constructor(authService : AuthService) {
-
-    authService.getLoggedInUser().then(userInfo=>{
-      this.loggedInUser = userInfo;
-    });
-  
+export class ProfilComponent implements OnInit{
+  currentUser!: firebase.default.User | null;
+  constructor(private authService : AuthService) {
+  }
+  ngOnInit(): void {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user;
+    })
   }
 
 }

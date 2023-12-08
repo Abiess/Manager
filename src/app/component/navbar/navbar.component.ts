@@ -1,6 +1,4 @@
-import { useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { User, UserInfo } from '@angular/fire/auth';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { TaskService } from 'src/app/shared/task.service';
@@ -21,27 +19,20 @@ export class NavbarComponent implements OnInit{
   isLoggedIn: boolean = false;
   isProfilPhotoOpen : boolean = false;
   isMenuOpen : boolean = false;
-  userInfo!: UserInfo | null;
-  userInfoSubject: Subject<any> = new Subject<any>(); //
+  currentUser: firebase.default.User | null | undefined;
+  userInfoSubject: Subject<any> = new Subject<any>(); 
 
-  constructor(private translate : TranslationService, private taskService : TaskService, 
+  constructor(private translate : TranslationService, 
+    private taskService : TaskService, 
     private authService: AuthService) {
-     
   }
-
   ngOnInit(): void {
-    this.authService.getLoggedInUser().then(userInfo => {
-      this.isLoggedIn = !!userInfo;
-      this.userInfo = userInfo;
-      this.userInfoSubject.next(userInfo); // Emit the user info to the Subject
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user;
+      this.isLoggedIn = !!user;
+      this.userInfoSubject.next(user); 
     });
-
-    // Subscribe to changes in user info
-    this.userInfoSubject.subscribe(updatedUserInfo => {
-      this.userInfo = updatedUserInfo;
-    });
-
-    };
+  }
    
   
   search(searchTerm : string) {
@@ -49,7 +40,7 @@ export class NavbarComponent implements OnInit{
     }
 
   signOut(){
-    this.authService.logout();
+    this.authService.signOut();
   }
   toggleProfilPhoto() : void {
     this.isProfilPhotoOpen = !this.isProfilPhotoOpen;

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GoogleAuthProvider, UserInfo } from '@angular/fire/auth';
+import { GoogleAuthProvider } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { updateProfile } from 'firebase/auth';
+import { Observable } from 'rxjs';
 
 
 
@@ -11,38 +11,24 @@ import { updateProfile } from 'firebase/auth';
 })
 export class AuthService {
   isLoggedIn: boolean = false;
+  user$: Observable<firebase.default.User | null>;
 
 
   constructor(private fireauth: AngularFireAuth, private router : Router) {
-    this.initializeAuthStateListener();
+    
+    this.user$ = this.fireauth.authState;
    }
 
-   private initializeAuthStateListener(): void {
-    this.fireauth.authState.subscribe((user : any ) => {
-      this.isLoggedIn = !!user;
-
-      
-    });
+   signIn(email: string, password: string): Promise<firebase.default.auth.UserCredential> {
+    return this.fireauth.signInWithEmailAndPassword(email, password);
+  }
+  signOut(): Promise<void> {
+    return this.fireauth.signOut();
   }
 
+   
    // login method
-   login(email : string, password : string) {
-    this.fireauth.signInWithEmailAndPassword(email,password).then( res => {
-        localStorage.setItem('token','true');
-       
-        this.router.navigate(['/task-parent']);
-
-        // if(res.user?.emailVerified == true) {
-        //   this.router.navigate(['/task-parent']);
-        // } else {
-        //   this.router.navigate(['/varify-email']);
-        // }
-
-    }, err => {
-        alert(err.message);
-        this.router.navigate(['/login']);
-    })
-  }
+   
 
   // register method
   register(email: string, password: string, displayName: string  ) {
@@ -69,17 +55,7 @@ export class AuthService {
   }
 
   // sign out
-  logout() {
-    this.fireauth.signOut().then( () => {
-      localStorage.removeItem('token');
-    
-      this.isLoggedIn = false;
-      this.router.navigate(['/']);
  
-    }, err => {
-      alert(err.message);
-    })
-  }
 
   // forgot password
   forgotPassword(email : string) {
@@ -92,7 +68,7 @@ export class AuthService {
 
   // email varification
   sendEmailForVarification(user : any) {
-    console.log(user);
+
     user.sendEmailVerification().then((res : any) => {
       this.router.navigate(['/varify-email']);
     }, (err : any) => {
@@ -104,27 +80,16 @@ export class AuthService {
   googleSignIn() {
     return this.fireauth.signInWithPopup(new GoogleAuthProvider).then(res => {
 
-      this.router.navigate(['/taskParent']);
-      localStorage.setItem('token',JSON.stringify(res.user?.uid));
+      this.router.navigate(['/']);
+
 
     }, err => {
       alert(err.message);
     })
   }
-
-  getLoggedInUser(): Promise<UserInfo | null> {
-    return new Promise<UserInfo | null>((resolve, reject) => {
-      this.fireauth.onAuthStateChanged((user) => {
-        if (user) {
-           resolve(user);
-        } else {
-          resolve(null);
-        }
-        
-      }, (error) => {
-        reject(error);
-      });
-    });
+  getCurrentUser(): Observable<firebase.default.User | null> {
+    return this.user$;
   }
+  
  
 }

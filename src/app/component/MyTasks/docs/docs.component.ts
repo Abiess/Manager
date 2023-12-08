@@ -4,6 +4,9 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { DocsService } from 'src/app/shared/docs.service';
 import { DocDialogComponent, DocDialogResult } from '../doc-dialog/doc-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { filter, map, Observable, of } from 'rxjs';
+
 
 
 @Component({
@@ -15,22 +18,30 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class DocsComponent {
 
-  data: Doc[] = [];
-  filteredData: Doc[] = [];
+  data!: Observable<Doc[]>;
+  filteredData!:  Observable<Doc[]>;
   searchText: string = '';
+  currentUser!: firebase.default.User | null;
  
-  constructor(private docsService : DocsService ,private dialog : MatDialog,
-     private authService : AuthService) {}
-
+  constructor(private docsService : DocsService ,
+    private dialog : MatDialog,
+     private authService : AuthService, private store: AngularFirestore,) {}
+     
+     
   ngOnInit() {
-    this.docsService.doc?.subscribe(docs => {
-        this.data = docs;
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user ;
+      if (this.currentUser){
+        this.data = this.store.collection('doc', ref => ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as Observable<Doc[]>;
+     
+      
         this.filteredData = this.data;
         
-      });
+      }
     
+      
+    })
     }
-
       docs: string | undefined;
       uploadedFileUrl: string | undefined;
   
@@ -38,12 +49,14 @@ export class DocsComponent {
       openLink(url: string): void {
         window.open(url, '_blank');
       }
-      
 
+      
       filterData() {
-        this.filteredData = this.data.filter(item =>
-          item.name.toLowerCase().includes(this.searchText.toLowerCase())
-        );
+        this.filteredData = this.data.pipe(
+         map(d =>{
+          return d.filter(l => l.name.toLowerCase().includes(this.searchText.toLowerCase()))
+         }))
+        
       }
 
   handleFileUpload(fileUrl: string) {
@@ -96,13 +109,9 @@ export class DocsComponent {
       dialogRef.afterClosed().subscribe((result: DocDialogResult) => {
           if (!result) {return;}
          
-          this.authService.getLoggedInUser().then(userInfo => {
-             result.doc.creator = userInfo?.uid;
+             result.doc.creator = this.currentUser?.uid;
              result.doc.createdAm = new Date();
-             this.docsService.getFirestoreInstance().collection('doc').add(result.doc);
-          })
-          .catch(error => {
-            console.log('Error retrieving logged-in user:', error);
-          });
-        });
-    }}
+             this.store.collection('doc').add(result.doc);
+         
+      
+    })}}

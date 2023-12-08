@@ -70,6 +70,8 @@ import { CommonModule } from '@angular/common';
 import { ResponsiveHelperComponent } from './shared/responsive-helper/responsive-helper.component';
 import { DocDialogComponent } from './component/MyTasks/doc-dialog/doc-dialog.component';
 import { AddCategoryDialogComponentComponent } from './component/MyTasks/doc-dialog/add-category-dialog-component/add-category-dialog-component.component';
+import { AuthGuardService } from './shared/auth-guard.service';
+import { AuthService } from './shared/auth.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -161,7 +163,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   ],
   providers: [
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, AuthGuardService, AuthService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthGuardService } from './shared/auth-guard.service';
 import { AuthService } from './shared/auth.service';
 
 
@@ -10,10 +11,12 @@ import { AuthService } from './shared/auth.service';
 export class AppComponent implements OnInit {
   title: any = 'Manager';
   showNavBar: boolean = false;
-  constructor(private authService: AuthService) {}
+  constructor(private authGuard: AuthGuardService) {}
   ngOnInit(): void {
-    this.authService.getLoggedInUser().then(user =>
-      this.showNavBar = !!user )
-    console.log("app component ts navbar "+ this.showNavBar);
+    // this.authService.getLoggedInUser().then(user =>
+    //   this.showNavBar = !!user )
+    // console.log("app component ts navbar "+ this.showNavBar);
+    this.showNavBar = this.authGuard.userDetails != null 
+
   }
 }
