@@ -6,5 +6,6 @@ export interface Group {
   deadline : Date;
   creator : string | undefined;
   createdAm : Date;
-  frequency : string; 
+  frequency : string;
+  members: string[] 
 }
