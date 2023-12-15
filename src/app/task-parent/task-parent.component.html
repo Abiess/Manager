@@ -1,8 +1,6 @@
 
-
 <button type="button" class="fixed bottom-2 right-2 z-50
- text-white 
-bg-[rgb(36,39,47)] hover:bg-[#24292F]/90 focus:ring-4
+ text-white bg-[rgb(36,39,47)] hover:bg-[#24292F]/90 focus:ring-4
  focus:outline-none focus:ring-[#24292F]/50 font-medium 
  rounded-lg text-sm px-3 py-2.5 text-center inline-flex 
  items-center dark:focus:ring-gray-500
@@ -12,13 +10,27 @@ bg-[rgb(36,39,47)] hover:bg-[#24292F]/90 focus:ring-4
   >add</mat-icon>Add Task
 </button>
   
-
-  
-
   <div *ngIf="isLoading ; else display">
     <app-spinner></app-spinner>
   </div>
   <ng-template #display>
+    <div class="relative w-full max-w-full flex-grow flex-1">
+      <div>
+          <label for="table-search" class="sr-only">Search</label>
+          <div class="relative">
+              
+              <input type="text"
+               id="table-search-users" 
+               class="block ml-2 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50
+                focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700
+                 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                  dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+               placeholder="Search for Tasks">
+            
+          </div>
+      </div>
+        
+    </div>
     <div class="hidden md:flex">
       <div class="container">
         <h2>Tasks</h2>

@@ -81,7 +81,6 @@ export class DocDialogComponent implements OnInit {
 
   addCategory(category: DocCategory) {
     // Implement adding a new category to Firebase
-    console.log('add category '+ this.currentUser?.uid)
       return this.getFirestoreInstance().collection('DocCategory').add(category )
   }
   // Add a public method to access the store

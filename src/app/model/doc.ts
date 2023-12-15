@@ -1,3 +1,4 @@
+import { Attachment } from "./attachement";
 
 export interface Doc {
   id?: string |undefined;
@@ -10,9 +11,5 @@ export interface Doc {
   paid : boolean;
     
   }
-  export interface Attachment{
-
-    name : string, 
-    creator : string ,
-  }
+ 
   

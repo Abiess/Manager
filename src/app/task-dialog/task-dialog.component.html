@@ -1,6 +1,8 @@
 <div class="overflow-y-scroll">
-  <div class="bg-gray-900 px-6 py-4 text-center text-2xl font-bold uppercase
-   text-white">Create/Update Task</div>
+  <div class="bg-gray-900 px-6 py-4 text-center 
+  text-2xl font-bold uppercase
+   text-white"> {{ data.isCreateMode ? 'Create Doc' : 'Update Doc' }}</div>
+  <div class="px-6 py-4">
   <div class="px-6 py-4">
     <div class="mb-4">
       <label class="mb-2 block font-bold text-gray-700" for="name"> Title </label>
@@ -37,54 +39,43 @@
       <select class="focus:shadow-outline w-full appearance-none rounded border
        px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none" [(ngModel)]="data.task.frequency"
        id="frequency" name="frequency">
-        <option value="">One Time Task</option>
-        <option value="Daily">Daily</option>
-        <option value="Weekly">Weekly</option>
-        <option value="Monthly">Monthly</option>
-        <option value="annually">annually</option>
+        <option value="one Time Task">One Time Task</option>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="annually">Annually</option>
       </select>
     </div>
 
     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
      
-      <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-          <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-            <div class="flex w-0 flex-1 items-center">
-              <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
-              </svg>
-              <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                <span class="truncate font-medium">resume_back_end_developer.pdf</span>
-                <span class="flex-shrink-0 text-gray-400">2.4mb</span>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0" *ngIf="!data.isCreateMode">
+     
+        <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+          <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+            
+            <li *ngFor="let document of data.task.attachements"
+             class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+              <div class="flex w-0 flex-1 items-center">
+                <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
+                </svg>
+                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                  <span class="truncate font-medium">{{document.name}}</span>
+                  <span class="flex-shrink-0 text-gray-400">size</span>
+                </div>
               </div>
-            </div>
-            <div class="ml-4 flex-shrink-0">
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-            </div>
-            <div class="ml-4 flex-shrink-0">
-              <a href="#" class="font-medium text-red-600 hover:text-red-500">Delete</a>
-            </div>
-          </li>
-          <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-            <div class="flex w-0 flex-1 items-center">
-              <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
-              </svg>
-              <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                <span class="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                <span class="flex-shrink-0 text-gray-400">4.5mb</span>
+              <div class="ml-4 flex-shrink-0">
+                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
               </div>
-            </div>
-            <div class="ml-4 flex-shrink-0">
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-            </div>
-            <div class="ml-4 flex-shrink-0">
-              <a href="#" class="font-medium text-red-600 hover:text-red-500">Delete</a>
-            </div>
-          </li>
-        </ul>
-      </dd>
+              <div class="ml-4 flex-shrink-0">
+                <a  class="font-medium text-red-600 hover:text-red-500">Delete</a>
+              </div>
+            </li>
+           
+          </ul>
+        </dd>
+      </div>
     </div>
     
     <div class="mb-4">
@@ -97,8 +88,8 @@
       <button class="focus:shadow-outline 
       rounded bg-gray-900 px-4 py-2 text-white 
       hover:bg-gray-800 focus:outline-none" 
-      [mat-dialog-close]="{ task: data.task }">
-      Update Task
+      [mat-dialog-close]="{ task: data.task}">{{ data.isCreateMode ? 'Create Task' : 'Update Task' }}
+    
     </button>
     <button class="focus:shadow-outline ml-6 mr-3
     rounded bg-gray-900 px-6 py-2 text-white 

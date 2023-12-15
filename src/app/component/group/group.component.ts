@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { GroupDialogComponent, GroupDialogResult } from '../group-dialog/group-dialog.component';
-import { MatTableDataSource } from '@angular/material/table';
 import { Group } from '../../model/Group';
-import { TaskService } from 'src/app/shared/task.service';
 import { AuthService } from 'src/app/shared/auth.service';
-import { AuthGuardService } from 'src/app/shared/auth-guard.service';
+import { map, Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-group',
@@ -30,19 +29,78 @@ export class GroupComponent implements OnInit {
   displayedColumns: string[] = [ 'name', 'description', 'createdAm'];
   //dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>();
   subDisplayedColumns: string[] = [ 'jj', 'ju', 'jujj'];
-  data : Group[] = [];
+
   columns: string[] = [ 'Name', 'created by', 'Members', 'Status','Action'];
   
-
-  constructor(private dialog : MatDialog, private taskService : TaskService, private authGuard : AuthGuardService) {  }
+  data!: Observable<Group[]>;
+  filteredData!:  Observable<Group[]>;
+  searchText: string = '';
+  currentUser!: firebase.default.User | null;
+ 
+  constructor(private dialog : MatDialog, 
+    private authService : AuthService, 
+    private store: AngularFirestore,
+     ) {}
   ngOnInit() {
-  this.taskService.group?.subscribe(groups => {
-      this.data = groups;
-    });
-  
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user ;
+      if (this.currentUser){
+        this.data = this.store.collection('group', ref => 
+        ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as Observable<Group[]>;
+        this.filteredData = this.data;
+      }
+    })
+    }
+
+      filterData() {
+        this.filteredData = this.data.pipe(
+         map(d =>{
+          return d.filter(l => l.name.toLowerCase().includes(this.searchText.toLowerCase()))
+         }))
+  }
+  get membersFromFilteredData(): Observable<string[]> {
+   
+    return this.filteredData.pipe(
+      map(groups => this.getMembers(groups))
+    );
   }
 
+  private getMembers(groups: Group[]): string[] {
+    const allMembers: string[] = [];
 
+    groups.forEach((group) => {
+      if (group.members) {
+        allMembers.push(...group.members);
+      }
+    });
+
+    return allMembers;
+  }
+
+  deleteGroup(group : Group){
+    this.store.collection('group').doc(group.id).delete();
+  }
+  editGroup(group : Group){
+   
+   
+       const dialogRef = this.dialog.open(GroupDialogComponent, {
+         maxWidth: '100vw',
+         maxHeight: '100vh',
+         
+         height: '100%',
+         width: '100%',
+         panelClass: 'full-screen-modal',
+         data: {
+           group: group,
+           isCreateMode : false
+         },
+       });
+       dialogRef.afterClosed().subscribe((result: GroupDialogResult) => {
+         if (!result) {
+           return;
+         }
+           this.store.collection('group').doc(group.id).update(group)
+       })}
 newGroup(): void {
   const dialogRef = this.dialog.open(GroupDialogComponent, {
     maxWidth: '100vw',
@@ -52,16 +110,17 @@ newGroup(): void {
     panelClass: 'full-screen-modal',
     data: {
       group: {},
+      isCreateMode: true
+      
     },
   });
   dialogRef.afterClosed().subscribe((result: GroupDialogResult) => {
       if (!result) {return;}
-      
-         result.group.creator = this.authGuard.userDetails.uid;
+console.log("hier i am " + JSON.stringify(result))
+         result.group.creator = this.currentUser?.uid;
+
          result.group.createdAm = new Date();
-         this.taskService.store1.collection('group').add(result.group);
-      
-     
+         this.store.collection('group').add(result.group);
     });
 }
   applyFilter(event: Event) {

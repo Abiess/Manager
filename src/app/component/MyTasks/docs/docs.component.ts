@@ -24,46 +24,39 @@ export class DocsComponent {
   currentUser!: firebase.default.User | null;
  
   constructor(private docsService : DocsService ,
-    private dialog : MatDialog,
-     private authService : AuthService, private store: AngularFirestore,) {}
+     private dialog : MatDialog,
+     private authService : AuthService, 
+     private store: AngularFirestore,) {}
      
      
   ngOnInit() {
     this.authService.getCurrentUser().subscribe(user => {
       this.currentUser = user ;
       if (this.currentUser){
-        this.data = this.store.collection('doc', ref => ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as Observable<Doc[]>;
-     
-      
+        this.data = this.store.collection('doc', ref => 
+        ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as Observable<Doc[]>;
         this.filteredData = this.data;
-        
       }
-    
-      
     })
     }
       docs: string | undefined;
       uploadedFileUrl: string | undefined;
-  
-   
+
       openLink(url: string): void {
         window.open(url, '_blank');
       }
 
-      
       filterData() {
         this.filteredData = this.data.pipe(
          map(d =>{
           return d.filter(l => l.name.toLowerCase().includes(this.searchText.toLowerCase()))
          }))
-        
       }
 
   handleFileUpload(fileUrl: string) {
     // Handle the uploaded file URL (e.g., store it or use it as needed)
     this.uploadedFileUrl = fileUrl;
   }
-
   
   editDoc(test : Doc){
      // this.formData = this.data.filter(y => y.id == id)
@@ -108,7 +101,6 @@ export class DocsComponent {
       });
       dialogRef.afterClosed().subscribe((result: DocDialogResult) => {
           if (!result) {return;}
-         
              result.doc.creator = this.currentUser?.uid;
              result.doc.createdAm = new Date();
              this.store.collection('doc').add(result.doc);

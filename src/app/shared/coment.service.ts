@@ -59,7 +59,6 @@ export class CommentService {
   postComment(commentText: string, commentId?: UUID, _taskId? : string
     ): 
   Observable<Comment | undefined> {
-    console.log("commet id is " + commentId+ "and uuid is  " + uuidv4() );
     const isNewComment: boolean = commentId === null || commentId === undefined;
     const newComment: Comment = {
       
@@ -77,7 +76,6 @@ export class CommentService {
        this.store.collection('comment').add(newComment)
       return of(newComment);
     } else {
-      console.log("hier bin ich wieder beim comment " + commentText)
       this.comments = this.comments.map(comment => comment.id === commentId ? 
         {
           ...comment,
@@ -86,7 +84,6 @@ export class CommentService {
         : comment
       );
       const updatedComment = this.comments.find(comment => comment.id === commentId);
-      console.log("hier bin ich beim Updated " + (JSON.stringify(this.comments)))
       
       return of(updatedComment);
     }

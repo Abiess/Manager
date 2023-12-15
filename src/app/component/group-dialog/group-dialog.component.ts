@@ -10,40 +10,58 @@ import { __values } from 'tslib';
   templateUrl: './group-dialog.component.html',
   styleUrls: ['./group-dialog.component.css']
 })
-export class GroupDialogComponent {
+export class GroupDialogComponent implements OnInit{
   memberName: string = "";
   members: string[] = [];
-
-
-  addGroup(): void {
+  private backupGroup: Partial<Group> = { ...this.data.group};
+  cancel(): void {
+    this.data.group.description = this.backupGroup.description;
+    this.data.group.name = this.backupGroup.name;
+    this.data.group.members = this.backupGroup.members;
+    this.data.group.createdAm = this.backupGroup.createdAm;
+    this.data.group.deadline = this.backupGroup.deadline;
+    this.data.group.creator = this.backupGroup.creator;
+    this.dialogRef.close(this.data);
+  }
+  addGroup(group : Partial<Group>): void {
     // Add the member name to the array
+    if (!group.members) {
+      group.members = [];  // If it doesn't exist, create an empty array
+    }
+  
     this.members.push(this.memberName);
-    //this.data.group.members?.push(this.memberName)
+    group.members?.push(this.memberName)
+    console.log("the members " + JSON.stringify(group))
   
   }
 
-  deleteMember(index: number): void {
+  deleteMember(index: number, group : Partial<Group>): void {
+    if (!group.members) {
+      group.members = [];  // If it doesn't exist, create an empty array
+    }
+  
     this.members.splice(index, 1);
-    //this.data.group.members?.splice(index, 1)
+    group.members?.splice(index, 1)
+    
   }
 
 constructor(
   public dialogRef: MatDialogRef<GroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TaskDialogData) {}
+  ngOnInit(): void {
+  
+  }
+
+    
 
 onNoClick(): void {
   this.dialogRef.close();
 }
-updateGroup(){
-  this.data.group.members?.concat(this.members)
-  { group: this.data.group}
-  console.log("this is the added group  " + JSON.stringify(this.data.group.members))
-}
-
 }
 export interface TaskDialogData {
   group: Partial<Group>;
   enableDelete: boolean;
+  isCreateMode : boolean;
 }
 export interface GroupDialogResult {
   group: Group;

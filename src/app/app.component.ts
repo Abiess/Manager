@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // this.authService.getLoggedInUser().then(user =>
     //   this.showNavBar = !!user )
-    // console.log("app component ts navbar "+ this.showNavBar);
     this.showNavBar = this.authGuard.userDetails != null 
 
   }

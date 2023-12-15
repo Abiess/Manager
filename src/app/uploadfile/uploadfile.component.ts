@@ -29,7 +29,6 @@ export class UploadfileComponent {
       (snapshot) => {
         // Image upload progress
         this.progress = (snapshot!.bytesTransferred / snapshot!.totalBytes) * 100;
-        console.log(`Upload is ${this.progress}% done`);
       },
       (error) => {
         console.error('Image upload failed:', error);
@@ -37,7 +36,6 @@ export class UploadfileComponent {
       () => {
         // Image upload is complete
         storageRef.getDownloadURL().subscribe((downloadURL) => {
-          console.log('Image upload successful. Download URL:', downloadURL);
           this.fileUploaded.emit(downloadURL);
   
           // You can now save the downloadURL to your database or use it in your app as needed.

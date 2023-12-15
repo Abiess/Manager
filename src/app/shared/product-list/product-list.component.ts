@@ -233,7 +233,6 @@ export class ProductListComponent implements OnInit {
   
         // Load products from the JSON file
         this.http.get<Product[]>('/assets/products.json').subscribe(data => {
-            console.log("hier is prd" + JSON.stringify(data))
           this.products = data;
         });
  

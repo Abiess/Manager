@@ -25,7 +25,6 @@ export class CategoryService implements OnInit{
  
    
   getCategories(currentUser : any) : Observable<DocCategory[]>{
-    console.log("i am here " + JSON.stringify(currentUser.uid))
     
    return this.getFirestoreInstance().
     collection('DocCategory', ref => ref.where('creator', '==', currentUser?.uid)).valueChanges({ idField: 'id' }) as 

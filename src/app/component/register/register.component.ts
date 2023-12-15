@@ -43,7 +43,6 @@ export class RegisterComponent {
         registrationData.displayName,
         
       );
-      console.log("register" + JSON.stringify(registrationData))
       this.registrationForm.reset();
     }
   }
