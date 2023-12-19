@@ -30,7 +30,7 @@ export class GroupDialogComponent implements OnInit{
     }
   
     this.members.push(this.memberName);
-    group.members?.push(this.memberName)
+    group.members?.push({joinedAt: new Date().toString(), member: this.memberName})
     console.log("the members " + JSON.stringify(group))
   
   }
@@ -51,8 +51,6 @@ constructor(
   ngOnInit(): void {
   
   }
-
-    
 
 onNoClick(): void {
   this.dialogRef.close();

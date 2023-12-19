@@ -1,3 +1,4 @@
+import { Project } from "./project";
 
 export interface Group {
   id?: string;
@@ -7,5 +8,13 @@ export interface Group {
   creator : string | undefined;
   createdAm : Date;
   frequency : string;
-  members: string[] 
+  members: groupMembers[],
+  projects: Project[]
 }
+interface groupMembers {
+
+  member : string ;
+  joinedAt : string, 
+
+}
+

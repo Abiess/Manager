@@ -30,7 +30,7 @@ export class GroupComponent implements OnInit {
   //dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>();
   subDisplayedColumns: string[] = [ 'jj', 'ju', 'jujj'];
 
-  columns: string[] = [ 'Name', 'created by', 'Members', 'Status','Action'];
+  columns: string[] = [ 'Name', 'created by', 'Members', 'Projects','Action'];
   
   data!: Observable<Group[]>;
   filteredData!:  Observable<Group[]>;
@@ -58,24 +58,7 @@ export class GroupComponent implements OnInit {
           return d.filter(l => l.name.toLowerCase().includes(this.searchText.toLowerCase()))
          }))
   }
-  get membersFromFilteredData(): Observable<string[]> {
-   
-    return this.filteredData.pipe(
-      map(groups => this.getMembers(groups))
-    );
-  }
-
-  private getMembers(groups: Group[]): string[] {
-    const allMembers: string[] = [];
-
-    groups.forEach((group) => {
-      if (group.members) {
-        allMembers.push(...group.members);
-      }
-    });
-
-    return allMembers;
-  }
+ 
 
   deleteGroup(group : Group){
     this.store.collection('group').doc(group.id).delete();
