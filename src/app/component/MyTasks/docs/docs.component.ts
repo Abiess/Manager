@@ -22,7 +22,7 @@ export class DocsComponent {
   data!: Observable<Doc[]>;
   filteredData!:  Observable<Doc[]>;
   searchText: string = '';
-  qrCodeValue: string = '' ;
+  qrCodeValue: string = ' ' ;
   currentUser!: firebase.default.User | null;
 
  
