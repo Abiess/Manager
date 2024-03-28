@@ -6,7 +6,10 @@ export interface Project {
     budget: string;
     tasks: string[];
     deadline : Date;
-    member : string[];
+    members : string[];
+    creator : string | undefined;
+    createdAm: Date;
+
     
   }
   

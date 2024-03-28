@@ -1,183 +1,104 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { map, Observable } from 'rxjs';
 import { Project } from 'src/app/model/project';
-import { TaskService } from 'src/app/shared/task.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { ProjectDialogComponent, ProjectDialogResult } from '../project-dialog/project-dialog.component';
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+ 
 })
 
 
 export class ProjectComponent implements OnInit {
-  isLoading = true;
   columnsToDisplay = [ 'name', 'description'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Project | null | undefined;
   displayedColumns: string[] = [ 'name', 'description', 'createdAm'];
-  dataSource: Project[] = []
-  columns: string[] = [ 'Name', 'Tasks', 'Budget','Deadline', 'Members/Groups'];
-
-    dummyProjects: Project[] = [
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    {
-      id: '1',
-      name: 'Project Alpha',
-      description: 'This is the first project',
-      budget: '$10,000',
-      tasks: ['Task 1', 'Task 2', 'Task 3'],
-      deadline: new Date('2023-12-31'),
-      member: ['John Doe', 'Jane Smith', 'Bob Williams'],
-    },
-    
-    {
-      id: '2',
-      name: 'Project Beta',
-      description: 'Another project in progress',
-      budget: '$15,000',
-      tasks: ['Task A', 'Task B', 'Task C'],
-      deadline: new Date('2023-11-15'),
-      member: ['Alice Johnson', 'Robert Brown'],
-    },
-    {
-      name: 'Project Gamma',
-      description: 'A new project',
-      budget: '$8,000',
-      tasks: ['Task X', 'Task Y'],
-      deadline: new Date('2024-02-28'),
-      member: ['Ella Davis', 'Michael Lee', 'Sophia Wilson'],
-    },
-  ];
-
-  constructor(private dialog : MatDialog, private taskService : TaskService) {  }
+  columns: string[] = [ 'Name', 'created by', 'Tasks','Action'];
+  
+  data!: Observable<Project[]>;
+  filteredData!:  Observable<Project[]>;
+  searchText: string = '';
+  currentUser!: firebase.default.User | null;
+ 
+  constructor(private dialog : MatDialog, 
+    private authService : AuthService, 
+    private store: AngularFirestore,
+     ) {}
   ngOnInit() {
-    this.dataSource = this.dummyProjects;
-    // this.taskService.project?.subscribe(projects => {
-    // this.dataSource =  projects;
-   // this.isLoading = false;
-  //  });
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user ;
+      if (this.currentUser){
+        this.data = this.store.collection('project', ref => 
+        ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as Observable<Project[]>;
+        this.filteredData = this.data;
+      }
+    })
+    }
+
+      filterData() {
+        this.filteredData = this.data.pipe(
+         map(d =>{
+          return d.filter(l => l.name.toLowerCase().includes(this.searchText.toLowerCase()))
+         }))
   }
-openDialog(): void {  
+ 
+
+  deleteProject(project : Project){
+    this.store.collection('project').doc(project.id).delete();
+  }
+  editProject(project : Project){
+   
+   
+       const dialogRef = this.dialog.open(ProjectDialogComponent, {
+         maxWidth: '100vw',
+         maxHeight: '100vh',
+         
+         height: '100%',
+         width: '100%',
+         panelClass: 'full-screen-modal',
+         data: {
+           project: project,
+           isCreateMode : false
+         },
+       });
+       dialogRef.afterClosed().subscribe((result: ProjectDialogResult) => {
+         if (!result) {
+           return;
+         }
+           this.store.collection('project').doc(project.id).update(project)
+       })}
+newProject(): void {
   const dialogRef = this.dialog.open(ProjectDialogComponent, {
-    width: '500px',
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    height: '100%',
+    width: '100%',
+    panelClass: 'full-screen-modal',
     data: {
       project: {},
+      isCreateMode: true
+      
     },
   });
-  dialogRef
-    .afterClosed()
-    .subscribe((result: ProjectDialogResult) => {
-      if (!result) {
-        return;
-      }
-      this.taskService.store1.collection('project').add(result.project);
-      
+  dialogRef.afterClosed().subscribe((result: ProjectDialogResult) => {
+      if (!result) {return;}
+
+         result.project.creator = this.currentUser?.uid;
+
+         result.project.createdAm = new Date();
+         this.store.collection('project').add(result.project);
     });
 }
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+   // this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+}
+  
   

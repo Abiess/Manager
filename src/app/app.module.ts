@@ -72,6 +72,8 @@ import { DocDialogComponent } from './component/MyTasks/doc-dialog/doc-dialog.co
 import { AddCategoryDialogComponentComponent } from './component/MyTasks/doc-dialog/add-category-dialog-component/add-category-dialog-component.component';
 import { AuthGuardService } from './shared/auth-guard.service';
 import { AuthService } from './shared/auth.service';
+import { QrcodeComponent } from './component/qrcode/qrcode.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -114,7 +116,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductListComponent,
     ResponsiveHelperComponent,
     DocDialogComponent,
-    AddCategoryDialogComponentComponent
+    AddCategoryDialogComponentComponent,
+    QrcodeComponent
 
   ],
   imports: [
@@ -159,7 +162,8 @@ export function HttpLoaderFactory(http: HttpClient) {
    MatNativeDateModule,
    MatBottomSheetModule,
    MatTabsModule,
-   CommonModule
+   CommonModule,
+   QRCodeModule
 
   ],
   providers: [

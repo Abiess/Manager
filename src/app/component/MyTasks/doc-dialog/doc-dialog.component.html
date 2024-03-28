@@ -28,7 +28,7 @@
                    <option value="Reparatur-rechnung">Reparatur/Rechnung</option>
                    <option value="andere-rechnung">andere-Rechnung</option> -->
                    <option 
-                   *ngFor="let category of categories" [value]="category.name" class="bg-cyan-950">
+                   *ngFor="let category of categories" [value]="category.name" class="bg-transparent">
                    {{ category.name }}
                     </option>
                </select>
@@ -36,8 +36,7 @@
            <div class="mt-10">
             <button (click)="openAddCategoryDialog()" class="bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600
            dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 
-           rounded outline-none focus:outline-none mr-4 mb-4 ease-linear transition-all duration-150">Add Category
-           </button>
+           rounded outline-none focus:outline-none mr-4 mb-4 ease-linear transition-all duration-150">Add Category</button>
            </div>
     
            <div class="sm:col-span-1">

@@ -1,50 +1,108 @@
+    
+                <div class="w-full overflow-auto rounded-lg shadow hidden md:block">
+                  <table class="w-full">
+                      <thead class="bg-gray-50 border-b-2 border-gray-200">
+                          <tr>
+                              <th *ngFor="let item of columns" scope="col" 
+                              class="p-3 text-sm text-left font-semibold uppercase tracking-wider">
+                                  {{item}}
+                              </th>
+                              
+                          </tr>
+                      </thead>
+                      <tbody class="text-gray-600 text-sm font-light divide-y divide-gray-600">
+                          <tr *ngFor="let item of filteredData | async">
+                              <td class="py-3 px-6 text-left whitespace-nowrap text-blue-500 hover:underline">
+                                  <div class="flex items-center">
+                                      </div>
+                                      <span class="font-medium">{{item.name}}</span>
+                               
+                              </td>
+                              <td class="py-3 text-left">
+                                  <div class="flex items-center">
+                                      <div class="mr-2">
+                                          <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"/>
+                                      </div>
+                                      <span>{{currentUser?.displayName}}</span>
+                                  </div>
+                              </td>
+                              <td class="text-left">
+                                  <div  class="flex" >
+                                      <div *ngFor="let member of item.members">
+                                           <div class="relative inline-flex items-center 
+                                           justify-center w-10 h-10 overflow-hidden bg-gray-100 
+                                           rounded-full dark:bg-gray-600">
+                                                      <span class="font-medium text-gray-600
+                                                       dark:text-gray-300">test</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </td>
+                             
+                              <td class="px-6 py-4">
+                                  <div class="flex items-center justify-items-start">
+                                      <button class="w-6 mr-2 transform hover:scale-110">
+                                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" class=" hover:text-purple-500" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                          </svg>
+                                      </button>
+                                      <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" (click)="editProject(item)">
+                                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" class=" hover:text-red-500" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                          </svg>
+                                      </button>
+                                      <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" (click)="deleteProject(item)">
+                                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" class=" hover:text-blue-500" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                          </svg>
+                                      </button>
+                                  </div>
+                              </td>
+                          </tr>
+                    
+                      </tbody>
+                  </table>
+              </div>
 
-<table class="min-w-full divide-y divide-gray-200">
-  <thead class="bg-gray-50">
-      <tr>
-          <th *ngFor="let item of columns" scope="col" class="px-11 py-3 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
-              {{item}}
-          </th>
-          
-      </tr>
-  </thead>
-  <tbody class="bg-white divide-y divide-gray-200">
-      <tr *ngFor="let item of dummyProjects" >
-          <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                  <div class="flex-shrink-0 h-10 w-10">
-                      <img class="h-10 w-10 rounded-full" src="https://i.pravatar.cc/150?img=1" alt="">
-                  </div>
-                  <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">
-                        {{item.name}}
+              <!--Grid view for mobile users-->
+              <div class="grid grid-cols-1 grap4 md:hidden " *ngFor="let item of filteredData | async">
+                  <div class="bg-white space-y-3 p-4 rounded-lg shadow">
+                      <div class="flex items-center space-x-2 text-sm">
+                          <div class="text-blue-600 font-bold hover:underline">
+                              {{item.creator}}
+                          </div>
+                          <div class="text-gray-500">
+                              {{item.name}}
+                          </div>
+                          <div class="">
+                              {{item.deadline}}
+                          </div>
+
                       </div>
-                      <div class="text-sm text-gray-500">
-                        {{item.description}}
+                      <div class="flex items-center space-x-2 text-sm">
+                          <div class="text-blue-600 font-bold hover:underline">
+                              order
+                          </div>
                       </div>
+                      <div class="flex items-center space-x-2 text-sm">
+                          <div class="text-blue-600 font-bold hover:underline">
+                              order
+                          </div>
+                         
+
+                      </div>
+
                   </div>
               </div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{item.description}}</div>
-              <div class="text-sm text-gray-500">{{item.description}}</div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-              <span class="px-2 inline-flex  text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                Aktiv
-              </span>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{item.budget}}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{item.tasks}}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-              <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-              <a href="#" class="ml-2 text-red-600 hover:text-red-900">Delete</a>
-          </td>
-      </tr>
+              
 
-  </tbody>
-</table>
+
+              <button type="button" class="fixed bottom-2 right-2 z-50
+text-white 
+bg-[rgb(36,39,47)] hover:bg-[#24292F]/90 focus:ring-4
+focus:outline-none focus:ring-[#24292F]/50 font-medium 
+rounded-lg text-sm px-3 py-2.5 text-center inline-flex 
+items-center dark:focus:ring-gray-500
+dark:hover:bg-[#050708]/30 mr-2 mb-2" (click)="newProject()">
+<mat-icon class="mr-2" >add</mat-icon>Add Project</button>

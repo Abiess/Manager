@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Doc } from 'src/app/model/doc';
 import { AuthService } from 'src/app/shared/auth.service';
 import { DocsService } from 'src/app/shared/docs.service';
 import { DocDialogComponent, DocDialogResult } from '../doc-dialog/doc-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { filter, map, Observable, of } from 'rxjs';
-
-
+import { map, Observable } from 'rxjs';
+import * as QRCode from 'qrcode';
+import { doc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-docs',
   templateUrl: './docs.component.html',
-  styleUrls: ['./docs.component.css']
+  styleUrls: ['./docs.component.css'],
+  
 })
 
 
@@ -21,24 +22,41 @@ export class DocsComponent {
   data!: Observable<Doc[]>;
   filteredData!:  Observable<Doc[]>;
   searchText: string = '';
+  qrCodeValue: string = '' ;
   currentUser!: firebase.default.User | null;
+
  
   constructor(private docsService : DocsService ,
      private dialog : MatDialog,
      private authService : AuthService, 
-     private store: AngularFirestore,) {}
+     private store: AngularFirestore,
+     ) {}
      
      
   ngOnInit() {
-    this.authService.getCurrentUser().subscribe(user => {
+    this.authService.getCurrentUser().subscribe(async user => {
       this.currentUser = user ;
       if (this.currentUser){
         this.data = this.store.collection('doc', ref => 
         ref.where('creator', '==', this.currentUser?.uid)).valueChanges({ idField: 'id' }) as Observable<Doc[]>;
         this.filteredData = this.data;
+        
+         this.data.subscribe(docs => {
+          docs.forEach(doc => {
+
+              this.qrCodeValue += doc.attachements.map(att => att.name) + "\n"
+              console.log("hier bin ich " + this.qrCodeValue )
+            
+            
+          });
+        });
+        
       }
     })
     }
+    
+    
+    
       docs: string | undefined;
       uploadedFileUrl: string | undefined;
 
