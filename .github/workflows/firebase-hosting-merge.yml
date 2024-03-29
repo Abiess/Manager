@@ -22,11 +22,11 @@ jobs:
         run: npm install
 
        - name: Install firebase
-       run: npm install @angular/fire@latest
+         run: npm install @angular/fire@latest
 
 
-       - name: Build
-         run: ng build
+      # - name: Build
+      #   run: ng build
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
