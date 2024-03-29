@@ -1,11 +1,11 @@
 import { Injectable, Input } from '@angular/core';
 import { collection, query, where, getDocs, onSnapshot, getFirestore } from "firebase/firestore";
-import { AngularFirestore, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { Comment} from '../model/coment';
 import { UUID } from 'angular2-uuid';
 import { uuidv4 } from '@firebase/util';
-import { JsonPipe } from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root'
